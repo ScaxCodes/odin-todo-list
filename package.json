@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  },
+  "name": "odin-todo-list",
+  "description": "At this point you’ve already had a fair amount of practice using the various techniques we’ve shown you. But we’ve been throwing a lot of information your way, so before we move on we’re going to take a minute to slow down and work on one more great portfolio project.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScaxCodes/odin-todo-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ScaxCodes/odin-todo-list/issues"
+  },
+  "homepage": "https://github.com/ScaxCodes/odin-todo-list#readme",
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
