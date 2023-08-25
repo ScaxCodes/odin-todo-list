@@ -1,6 +1,5 @@
-import { formatDistance, subDays } from 'date-fns'
+import { todoFactory } from "./createTodo";
 
-console.log(formatDistance(subDays(new Date(), 3), new Date(), { addSuffix: true }))
-//=> "3 days ago"
-
-console.log("hi");
+const apfel = todoFactory("Geile Aufgabe",2,3,4);
+console.log(apfel);
+apfel.showTitle();
