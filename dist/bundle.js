@@ -2,22 +2,45 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/createTodo.js":
-/*!***************************!*\
-  !*** ./src/createTodo.js ***!
-  \***************************/
+/***/ "./src/appLogic.js":
+/*!*************************!*\
+  !*** ./src/appLogic.js ***!
+  \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   changePriority: () => (/* binding */ changePriority),
+/* harmony export */   deleteTodo: () => (/* binding */ deleteTodo),
+/* harmony export */   projects: () => (/* binding */ projects),
 /* harmony export */   todoFactory: () => (/* binding */ todoFactory)
 /* harmony export */ });
+const projects = []
+
+projects[0] = {
+    name: "Default Project",
+    todos: [],
+}
+
 const todoFactory = (title, description, dueDate, priority) => {
-    const showTitle = () => console.log(title); 
+    const showTitle = () => console.log(title);
+    console.log("Todo added...");
     return { title, description, dueDate, priority, showTitle }
 }
 
-console.log("This is a log message from createTodo.js body");
+const deleteTodo = (projectIndex, todoIndex) => {
+    projects[projectIndex].todos.splice(todoIndex, 1);
+    console.log("Todo deleted...");
+    return projects[projectIndex];
+}
+
+const changePriority = (projectIndex, todoIndex, priority) => {
+    projects[projectIndex].todos[todoIndex].priority = priority;
+    console.log("Priority has been changed");
+    return projects[projectIndex];
+}
+
+console.log("appLogic.js has been executed");
 
 
 
@@ -86,19 +109,23 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _createTodo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createTodo */ "./src/createTodo.js");
+/* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
 
 
-const projects = []
 
-projects[0] = {
-    name: "Default Project",
-    todos: [],
-}
 
-projects[0].todos.push((0,_createTodo__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(1,2,3,4));
+_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(1,2,3,4));
+_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(5,6,7,8));
 
-console.log(projects);
+setTimeout(() => console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects), 3000);
+
+// setTimeout(() => deleteTodo(0,0), 6000);
+
+// console.log(projects);
+
+// changePriority(0,0,1);
+
+// console.log(projects);
 })();
 
 /******/ })()
