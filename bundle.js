@@ -44,6 +44,58 @@ console.log("appLogic.js has been executed");
 
 
 
+/***/ }),
+
+/***/ "./src/domLoader.js":
+/*!**************************!*\
+  !*** ./src/domLoader.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initPage: () => (/* binding */ initPage)
+/* harmony export */ });
+/* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
+
+
+let addProjectButton = document.querySelector(".sidebar button");
+let addTodoButton = document.querySelector(".todo-box button");
+let sidebar = document.querySelector(".sidebar");
+let sidebarList = document.querySelector(".sidebar ul")
+let todoList = document.querySelector(".todo-list");
+
+// function selectElementsAgain() {
+//     addProjectButton = document.querySelector(".sidebar button");
+//     addTodoButton = document.querySelector(".todo-box button");
+//     sidebar = document.querySelector(".sidebar");
+//     todoList = document.querySelector(".todo-list");
+//     console.log("Elements again selected...");
+// }
+
+function addListeners() {
+    addProjectButton.addEventListener("click", addProject);
+    console.log("Event listeners added...");
+}
+
+function initPage() {
+    // selectElementsAgain();
+    addListeners();
+    console.log("Page initialized...");
+}
+
+function addProject() {
+    console.log(sidebarList);
+    const newProject = document.createElement("li");
+    sidebarList.appendChild(newProject);
+    newProject.textContent = "Hallo";
+    console.log("Project added...");
+}
+
+console.log("domLoader.js has been executed");
+
+
+
 /***/ })
 
 /******/ 	});
@@ -110,6 +162,7 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
+/* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
 
 
 
@@ -117,11 +170,12 @@ __webpack_require__.r(__webpack_exports__);
 _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(1,2,3,4));
 _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(5,6,7,8));
 
-setTimeout(() => console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects), 3000);
+// setTimeout(() => console.log(projects), 3000);
 
 // setTimeout(() => deleteTodo(0,0), 6000);
 
-// console.log(projects);
+console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects);
+(0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.initPage)();
 
 // changePriority(0,0,1);
 
