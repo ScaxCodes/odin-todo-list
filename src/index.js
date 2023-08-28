@@ -1,5 +1,12 @@
 import { todoFactory } from "./createTodo";
 
-const apfel = todoFactory("Geile Aufgabe",2,3,4);
-console.log(apfel);
-apfel.showTitle();
+const projects = []
+
+projects[0] = {
+    name: "Default Project",
+    todos: [],
+}
+
+projects[0].todos.push(todoFactory(1,2,3,4));
+
+console.log(projects);
