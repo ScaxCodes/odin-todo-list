@@ -36,7 +36,7 @@ const deleteTodo = (projectIndex, todoIndex) => {
 
 const changePriority = (projectIndex, todoIndex, priority) => {
     projects[projectIndex].todos[todoIndex].priority = priority;
-    console.log("Priority has been changed");
+    console.log("Priority has been changed...");
     return projects[projectIndex];
 }
 

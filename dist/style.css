@@ -7,3 +7,22 @@
 		/* https://css-tricks.com/snippets/css/system-font-stack/ below: */
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
+body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  background-color: pink;
+}
+
+.content {
+  background-color: sandybrown;
+}
+
+.todo-box {
+  background-color: rgb(248, 144, 53);
+  width: 500px;
+}
