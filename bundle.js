@@ -89,9 +89,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _createTodo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createTodo */ "./src/createTodo.js");
 
 
-const apfel = (0,_createTodo__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Geile Aufgabe",2,3,4);
-console.log(apfel);
-apfel.showTitle();
+const projects = []
+
+projects[0] = {
+    name: "Default Project",
+    todos: [],
+}
+
+projects[0].todos.push((0,_createTodo__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(1,2,3,4));
+
+console.log(projects);
 })();
 
 /******/ })()
