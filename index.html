@@ -18,7 +18,12 @@
     <div class="content">
         <div class="todo-box">
             <label for="project">Project</label>
-            <input type="text" id="project"><br>
+            <select name="project" id="project">
+                <option value="default-project">Default Project</option>
+                <option value="arbeit">Arbeit</option>
+            </select>
+            <br>
+            <!-- <input type="text" id="project"> -->
             <label for="id">Title</label>
             <input type="text" id="title">
             <label for="description">Description</label>
@@ -32,10 +37,7 @@
         <div class="todo-list">
             <h1>Todo-List</h1>
             <h2>Default Project</h2>
-            <ul>
-                <li>Todo 1</li>
-                <li>Todo 2</li>
-            </ul>
+            <ul></ul>
         </div>
     </div>
 </body>
