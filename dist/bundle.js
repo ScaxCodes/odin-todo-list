@@ -22,10 +22,15 @@ projects[0] = {
     todos: [],
 }
 
+projects[1] = {
+    name: "Hallo",
+    todos: [],
+}
+
 const todoFactory = (title, description, dueDate, priority) => {
-    const showTitle = () => console.log(title);
+    // const showTitle = () => console.log(title);
     console.log("Todo added...");
-    return { title, description, dueDate, priority, showTitle }
+    return { title, description, dueDate, priority }
 }
 
 const deleteTodo = (projectIndex, todoIndex) => {
@@ -54,6 +59,8 @@ console.log("appLogic.js has been executed");
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   allFieldsFilled: () => (/* binding */ allFieldsFilled),
+/* harmony export */   displayTodo: () => (/* binding */ displayTodo),
 /* harmony export */   getInputs: () => (/* binding */ getInputs),
 /* harmony export */   initPage: () => (/* binding */ initPage)
 /* harmony export */ });
@@ -61,7 +68,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let addProjectButton = document.querySelector(".sidebar button");
-let addTodoButton = document.querySelector(".todo-box button");
+// let addTodoButton = document.querySelector(".todo-box button");
 let sidebar = document.querySelector(".sidebar");
 let sidebarList = document.querySelector(".sidebar ul")
 let todoList = document.querySelector(".todo-list ul");
@@ -82,13 +89,14 @@ let priorityField = document.querySelector("#priority");
 
 function addListeners() {
     addProjectButton.addEventListener("click", addProject);
-    addTodoButton.addEventListener("click", addTodo);
+    // addTodoButton.addEventListener("click", addTodo);
     console.log("Event listeners added...");
 }
 
 function initPage() {
     // selectElementsAgain();
     addListeners();
+    renderDropdownMenu();
     console.log("Page initialized...");
 }
 
@@ -99,11 +107,25 @@ function addProject() {
     console.log("Project added...");
 }
 
-function addTodo() {
+function displayTodo() {
     const newTodo = document.createElement("li");
     todoList.appendChild(newTodo);
-    newTodo.textContent = titleField.value;
+    newTodo.textContent = _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos[getTodoLength() - 1].title + ", due Date: " + _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos[getTodoLength() - 1].dueDate;
+    addDeleteButton(newTodo);
     clearForm();
+}
+
+function addDeleteButton(newTodo) {
+    newTodo.innerHTML += " " + `<button class="delete">x</button>`;
+}
+
+function getTodoLength() {
+    return _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.length;
+}
+
+function allFieldsFilled() {
+    if (titleField.value && descriptionField.value && dueDateField.value && priorityField.value) return true;
+    else false;
 }
 
 function getInputs() {
@@ -111,11 +133,22 @@ function getInputs() {
 }
 
 function clearForm() {
-    projectField.value = "";
     titleField.value = "";
     descriptionField.value = "";
     dueDateField.value = "";
     priorityField.value = "";
+    console.log("Fields cleared...")
+}
+
+function renderDropdownMenu() {
+    const selectElement = document.querySelector("select");
+    let options = "";
+
+    for (let i = 0; i < _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects.length; i++) {
+        options += `<option value="${_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[i].name}">${_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[i].name}</option>`
+    }
+
+    selectElement.innerHTML = options;
 }
 
 console.log("domLoader.js has been executed");
@@ -192,20 +225,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+let addProjectButton = document.querySelector(".sidebar button");
+let addTodoButton = document.querySelector(".todo-box button");
+let sidebar = document.querySelector(".sidebar");
+let sidebarList = document.querySelector(".sidebar ul")
+let todoList = document.querySelector(".todo-list ul");
 
-_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(1,2,3,4));
-_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(5,6,7,8));
+let projectField = document.querySelector("#project");
+let titleField = document.querySelector("#title");
+let descriptionField = document.querySelector("#description");
+let dueDateField = document.querySelector("#due-date");
+let priorityField = document.querySelector("#priority");
 
-// setTimeout(() => console.log(projects), 3000);
+addTodoButton.addEventListener("click", () => {
+    // if (allFieldsFilled()) {
+        createTodo();
+        (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.displayTodo)();
+    // }
+    // else alert("Please fill all fields to add a todo!");
+});
 
-// setTimeout(() => deleteTodo(0,0), 6000);
+function createTodo() {
+    _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push(
+        (0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(
+            titleField.value,
+            descriptionField.value,
+            dueDateField.value,
+            priorityField.value
+        )
+    );
+    console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0]);
+}
 
-console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects);
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.initPage)();
 
-// changePriority(0,0,1);
-
-// console.log(projects);
+console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects);
 })();
 
 /******/ })()

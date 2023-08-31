@@ -5,10 +5,15 @@ projects[0] = {
     todos: [],
 }
 
+projects[1] = {
+    name: "Hallo",
+    todos: [],
+}
+
 const todoFactory = (title, description, dueDate, priority) => {
-    const showTitle = () => console.log(title);
+    // const showTitle = () => console.log(title);
     console.log("Todo added...");
-    return { title, description, dueDate, priority, showTitle }
+    return { title, description, dueDate, priority }
 }
 
 const deleteTodo = (projectIndex, todoIndex) => {

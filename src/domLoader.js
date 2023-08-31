@@ -1,7 +1,7 @@
 import { projects } from "./appLogic";
 
 let addProjectButton = document.querySelector(".sidebar button");
-let addTodoButton = document.querySelector(".todo-box button");
+// let addTodoButton = document.querySelector(".todo-box button");
 let sidebar = document.querySelector(".sidebar");
 let sidebarList = document.querySelector(".sidebar ul")
 let todoList = document.querySelector(".todo-list ul");
@@ -22,13 +22,14 @@ let priorityField = document.querySelector("#priority");
 
 function addListeners() {
     addProjectButton.addEventListener("click", addProject);
-    addTodoButton.addEventListener("click", addTodo);
+    // addTodoButton.addEventListener("click", addTodo);
     console.log("Event listeners added...");
 }
 
 function initPage() {
     // selectElementsAgain();
     addListeners();
+    renderDropdownMenu();
     console.log("Page initialized...");
 }
 
@@ -39,11 +40,25 @@ function addProject() {
     console.log("Project added...");
 }
 
-function addTodo() {
+function displayTodo() {
     const newTodo = document.createElement("li");
     todoList.appendChild(newTodo);
-    newTodo.textContent = titleField.value;
+    newTodo.textContent = projects[0].todos[getTodoLength() - 1].title + ", due Date: " + projects[0].todos[getTodoLength() - 1].dueDate;
+    addDeleteButton(newTodo);
     clearForm();
+}
+
+function addDeleteButton(newTodo) {
+    newTodo.innerHTML += " " + `<button class="delete">x</button>`;
+}
+
+function getTodoLength() {
+    return projects[0].todos.length;
+}
+
+function allFieldsFilled() {
+    if (titleField.value && descriptionField.value && dueDateField.value && priorityField.value) return true;
+    else false;
 }
 
 function getInputs() {
@@ -51,13 +66,24 @@ function getInputs() {
 }
 
 function clearForm() {
-    projectField.value = "";
     titleField.value = "";
     descriptionField.value = "";
     dueDateField.value = "";
     priorityField.value = "";
+    console.log("Fields cleared...")
+}
+
+function renderDropdownMenu() {
+    const selectElement = document.querySelector("select");
+    let options = "";
+
+    for (let i = 0; i < projects.length; i++) {
+        options += `<option value="${projects[i].name}">${projects[i].name}</option>`
+    }
+
+    selectElement.innerHTML = options;
 }
 
 console.log("domLoader.js has been executed");
 
-export { initPage, getInputs };
+export { initPage, getInputs, displayTodo, allFieldsFilled };
