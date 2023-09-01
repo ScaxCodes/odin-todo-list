@@ -1,38 +1,15 @@
-import { todoFactory, deleteTodo, changePriority, projects } from "./appLogic";
-import { initPage, displayTodo, allFieldsFilled } from "./domLoader";
+import { todoFactory, projectFactory } from "./appLogic";
+import { renderPage } from "./domLoader";
 
-let addProjectButton = document.querySelector(".sidebar button");
-let addTodoButton = document.querySelector(".todo-box button");
-let sidebar = document.querySelector(".sidebar");
-let sidebarList = document.querySelector(".sidebar ul")
-let todoList = document.querySelector(".todo-list ul");
+// Create default project
+const projects = [];
 
-let projectField = document.querySelector("#project");
-let titleField = document.querySelector("#title");
-let descriptionField = document.querySelector("#description");
-let dueDateField = document.querySelector("#due-date");
-let priorityField = document.querySelector("#priority");
+projects.push(projectFactory("Work", "Well, I just like to work"));
+projects.push(projectFactory("Hobbies", "I do have hobbies though"));
+projects.push(projectFactory("Car", "Always broken"));
 
-addTodoButton.addEventListener("click", () => {
-    // if (allFieldsFilled()) {
-        createTodo();
-        displayTodo();
-    // }
-    // else alert("Please fill all fields to add a todo!");
-});
-
-function createTodo() {
-    projects[0].todos.push(
-        todoFactory(
-            titleField.value,
-            descriptionField.value,
-            dueDateField.value,
-            priorityField.value
-        )
-    );
-    console.log(projects[0]);
-}
-
-initPage();
+renderPage();
 
 console.log(projects);
+
+export { projects };
