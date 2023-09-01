@@ -23,7 +23,7 @@ function todoFactory(title, description, dueDate, priority) {
 
 function projectFactory(name, description) {
     console.log("Project added...");
-    return { name, description };
+    return { name, description, active: false };
     // return { name, description, todos: [], };
 }
 
@@ -54,18 +54,26 @@ const sideMenu = document.querySelector(".side-menu");
 // }
 
 function renderPage() {
-    renderProjects();
+    renderSidebar();
+    renderMain();
     // addListeners();
     console.log("Page rendered...");
 }
 
-function renderProjects() {
+function renderSidebar() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         const projectDiv = document.createElement("div");
-        projectDiv.classList = "project";
+        projectDiv.className = "project";
+        // projectDiv.classList.add("project");
+        // console.log(project.active)
+        if (project.active) projectDiv.classList.add("active");
         sideMenu.appendChild(projectDiv);
         projectDiv.innerText = project.name;
     });
+}
+
+function renderMain() {
+
 }
 
 function addProject() {
@@ -97,6 +105,8 @@ __webpack_require__.r(__webpack_exports__);
 const projects = [];
 
 projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Work", "Well, I just like to work"));
+projects[0].active = true;
+
 projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Hobbies", "I do have hobbies though"));
 projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Car", "Always broken"));
 
