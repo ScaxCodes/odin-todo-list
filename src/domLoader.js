@@ -1,9 +1,12 @@
 import { projects } from "./index";
+import { todoFactory, projectFactory } from "./appLogic";
 
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
-const test = document.querySelector(".test");
-const testContainer = document.querySelector(".test-container");
+const popup = document.querySelector(".popup");
+const popupContainer = document.querySelector(".popup-container");
+const titleInput = document.querySelector("#project-title");
+const descriptionInput = document.querySelector("#project-description");
 
 // function addListeners() {
 //     addProjectButton.addEventListener("click", addProject);
@@ -13,7 +16,7 @@ const testContainer = document.querySelector(".test-container");
 function renderPage() {
     renderSidebar();
     renderMainHeader();
-    getEventListeners();
+    getDynamicEventListeners();
     console.log("Page rendered...");
 }
 
@@ -45,7 +48,7 @@ function renderMainHeader() {
     });
 }
 
-function getEventListeners() {
+function getDynamicEventListeners() {
     const projectButtons = document.querySelectorAll(".project");
     projectButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
@@ -58,14 +61,29 @@ function getEventListeners() {
 
     const addProjectButton = document.querySelector(".add-project-button");
     addProjectButton.addEventListener("click", () => {
-        test.style.display = "flex";
-        testContainer.style.display = "flex";
+        popup.style.display = "flex";
+        popupContainer.style.display = "flex";
     });
+}
 
+function getStaticEventListeners() {
     const cancelPopupButton = document.querySelector(".cancel-button");
     cancelPopupButton.addEventListener("click", () => {
-        test.style.display = "none";
-        testContainer.style.display = "none";     
+        popup.style.display = "none";
+        popupContainer.style.display = "none";     
+    });
+
+    const popupAddProjectButton = document.querySelector(".add-button");
+    popupAddProjectButton.addEventListener("click", () => {
+        if (!titleInput.value) alert("Please enter a title");
+        else {
+            projects.push(projectFactory(titleInput.value, descriptionInput.value));
+            popup.style.display = "none";
+            popupContainer.style.display = "none";
+            clearInputs();
+            clearWebsite();
+            renderPage();
+        }
     });
 }
 
@@ -73,6 +91,11 @@ function clearActiveProjects() {
     projects.forEach(project => {
         project.active = false;
     });
+}
+
+function clearInputs() {
+    titleInput.value = "";
+    descriptionInput.value = "";
 }
 
 function clearWebsite() {
@@ -90,4 +113,4 @@ function addProject() {
 
 console.log("domLoader.js has been executed");
 
-export { renderPage };
+export { renderPage, getStaticEventListeners };

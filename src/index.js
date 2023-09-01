@@ -1,5 +1,5 @@
 import { todoFactory, projectFactory } from "./appLogic";
-import { renderPage } from "./domLoader";
+import { renderPage, getStaticEventListeners } from "./domLoader";
 
 // Create default project
 const projects = [];
@@ -11,6 +11,7 @@ projects.push(projectFactory("Hobbies", "I do have hobbies though"));
 projects.push(projectFactory("Car", "Always broken"));
 
 renderPage();
+getStaticEventListeners();
 
 console.log(projects);
 
