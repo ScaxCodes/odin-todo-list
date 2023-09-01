@@ -23,6 +23,11 @@ function renderSidebar() {
         sideMenu.appendChild(projectDiv);
         projectDiv.innerText = project.name;
     });
+
+    const addProjectButton = document.createElement("div");
+    addProjectButton.classList.add("add-project-button");
+    sideMenu.appendChild(addProjectButton);
+    addProjectButton.innerHTML = `<img src="plus-square.svg">Add Project`;
 }
 
 function renderMainHeader() {
