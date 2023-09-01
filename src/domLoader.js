@@ -1,6 +1,7 @@
 import { projects } from "./index";
 
 const sideMenu = document.querySelector(".side-menu");
+const mainHeader = document.querySelector(".main-header");
 
 // function addListeners() {
 //     addProjectButton.addEventListener("click", addProject);
@@ -9,7 +10,7 @@ const sideMenu = document.querySelector(".side-menu");
 
 function renderPage() {
     renderSidebar();
-    renderMain();
+    renderMainHeader();
     // addListeners();
     console.log("Page rendered...");
 }
@@ -17,17 +18,19 @@ function renderPage() {
 function renderSidebar() {
     projects.forEach(project => {
         const projectDiv = document.createElement("div");
-        projectDiv.className = "project";
-        // projectDiv.classList.add("project");
-        // console.log(project.active)
+        projectDiv.classList.add("project");
         if (project.active) projectDiv.classList.add("active");
         sideMenu.appendChild(projectDiv);
         projectDiv.innerText = project.name;
     });
 }
 
-function renderMain() {
-
+function renderMainHeader() {
+    const headerDiv = document.createElement("div");
+    mainHeader.appendChild(headerDiv);
+    projects.forEach(project => {
+        if (project.active) headerDiv.innerText = project.name;
+    });
 }
 
 function addProject() {
