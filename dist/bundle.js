@@ -79,10 +79,15 @@ function renderSidebar() {
 }
 
 function renderMainHeader() {
-    const headerDiv = document.createElement("div");
-    mainHeader.appendChild(headerDiv);
+    const headerTitle = document.createElement("div");
+    mainHeader.appendChild(headerTitle);
+    const headerDescription = document.createElement("div");
+    mainHeader.appendChild(headerDescription);
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
-        if (project.active) headerDiv.innerText = project.name;
+        if (project.active) {
+            headerTitle.innerText = project.name;
+            headerDescription.innerText = project.description;
+        }
     });
 }
 
