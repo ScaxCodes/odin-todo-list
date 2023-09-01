@@ -57,7 +57,7 @@ const mainHeader = document.querySelector(".main-header");
 function renderPage() {
     renderSidebar();
     renderMainHeader();
-    // addListeners();
+    getEventListeners();
     console.log("Page rendered...");
 }
 
@@ -77,6 +77,34 @@ function renderMainHeader() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         if (project.active) headerDiv.innerText = project.name;
     });
+}
+
+function getEventListeners() {
+    const projectButtons = document.querySelectorAll(".project");
+    projectButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            clearActiveProjects();
+            _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
+            clearWebsite();
+            renderPage();
+            console.log("Hello", index);
+        });
+    });
+}
+
+function clearActiveProjects() {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
+        project.active = false;
+    });
+}
+
+function clearWebsite() {
+    sideMenu.innerHTML = `
+        <div class="side-header">
+            <h2>Projects</h2>
+        </div>
+    `;
+    mainHeader.innerHTML = "";
 }
 
 function addProject() {
