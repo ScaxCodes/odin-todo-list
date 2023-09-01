@@ -48,6 +48,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
+const test = document.querySelector(".test");
+const testContainer = document.querySelector(".test-container");
 
 // function addListeners() {
 //     addProjectButton.addEventListener("click", addProject);
@@ -92,8 +94,19 @@ function getEventListeners() {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
             clearWebsite();
             renderPage();
-            console.log("Hello", index);
         });
+    });
+
+    const addProjectButton = document.querySelector(".add-project-button");
+    addProjectButton.addEventListener("click", () => {
+        test.style.display = "flex";
+        testContainer.style.display = "flex";
+    });
+
+    const cancelPopupButton = document.querySelector(".cancel-button");
+    cancelPopupButton.addEventListener("click", () => {
+        test.style.display = "none";
+        testContainer.style.display = "none";     
     });
 }
 
