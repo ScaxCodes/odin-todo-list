@@ -27,6 +27,10 @@ body {
   background-color: rgb(181, 134, 142);
 }
 
+.project[class*="active"] {
+  border: 3px solid rgb(255, 107, 132);
+}
+
 .main {
   background-color: sandybrown;
 }
