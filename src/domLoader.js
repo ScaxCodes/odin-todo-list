@@ -37,6 +37,8 @@ function addProject() {
     const newProject = document.createElement("li");
     sidebarList.appendChild(newProject);
     newProject.textContent = prompt("Enter project name");
+    projects.push({ name: newProject.textContent, todos: [], });
+    renderDropdownMenu();
     console.log("Project added...");
 }
 
@@ -45,7 +47,14 @@ function displayTodo() {
     todoList.appendChild(newTodo);
     newTodo.textContent = projects[0].todos[getTodoLength() - 1].title + ", due Date: " + projects[0].todos[getTodoLength() - 1].dueDate;
     addDeleteButton(newTodo);
+    todoAddListener(newTodo);
     clearForm();
+}
+
+function todoAddListener(newTodo) {
+    newTodo.addEventListener("click", () => {
+        newTodo.innerHTML += "Helloooooo";
+    });
 }
 
 function addDeleteButton(newTodo) {
