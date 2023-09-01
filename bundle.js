@@ -10,39 +10,21 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   changePriority: () => (/* binding */ changePriority),
-/* harmony export */   deleteTodo: () => (/* binding */ deleteTodo),
-/* harmony export */   projects: () => (/* binding */ projects),
+/* harmony export */   projectFactory: () => (/* binding */ projectFactory),
 /* harmony export */   todoFactory: () => (/* binding */ todoFactory)
 /* harmony export */ });
-const projects = []
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 
-projects[0] = {
-    name: "Default Project",
-    todos: [],
-}
 
-projects[1] = {
-    name: "Hallo",
-    todos: [],
-}
-
-const todoFactory = (title, description, dueDate, priority) => {
-    // const showTitle = () => console.log(title);
+function todoFactory(title, description, dueDate, priority) {
     console.log("Todo added...");
-    return { title, description, dueDate, priority }
+    return { title, description, dueDate, priority };
 }
 
-const deleteTodo = (projectIndex, todoIndex) => {
-    projects[projectIndex].todos.splice(todoIndex, 1);
-    console.log("Todo deleted...");
-    return projects[projectIndex];
-}
-
-const changePriority = (projectIndex, todoIndex, priority) => {
-    projects[projectIndex].todos[todoIndex].priority = priority;
-    console.log("Priority has been changed...");
-    return projects[projectIndex];
+function projectFactory(name, description) {
+    console.log("Project added...");
+    return { name, description };
+    // return { name, description, todos: [], };
 }
 
 console.log("appLogic.js has been executed");
@@ -59,99 +41,68 @@ console.log("appLogic.js has been executed");
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   allFieldsFilled: () => (/* binding */ allFieldsFilled),
-/* harmony export */   displayTodo: () => (/* binding */ displayTodo),
-/* harmony export */   getInputs: () => (/* binding */ getInputs),
-/* harmony export */   initPage: () => (/* binding */ initPage)
+/* harmony export */   renderPage: () => (/* binding */ renderPage)
 /* harmony export */ });
-/* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 
 
-let addProjectButton = document.querySelector(".sidebar button");
-// let addTodoButton = document.querySelector(".todo-box button");
-let sidebar = document.querySelector(".sidebar");
-let sidebarList = document.querySelector(".sidebar ul")
-let todoList = document.querySelector(".todo-list ul");
+const sideMenu = document.querySelector(".side-menu");
 
-let projectField = document.querySelector("#project");
-let titleField = document.querySelector("#title");
-let descriptionField = document.querySelector("#description");
-let dueDateField = document.querySelector("#due-date");
-let priorityField = document.querySelector("#priority");
-
-// function selectElementsAgain() {
-//     addProjectButton = document.querySelector(".sidebar button");
-//     addTodoButton = document.querySelector(".todo-box button");
-//     sidebar = document.querySelector(".sidebar");
-//     todoList = document.querySelector(".todo-list");
-//     console.log("Elements again selected...");
+// function addListeners() {
+//     addProjectButton.addEventListener("click", addProject);
+//     console.log("Event listeners added...");
 // }
 
-function addListeners() {
-    addProjectButton.addEventListener("click", addProject);
-    // addTodoButton.addEventListener("click", addTodo);
-    console.log("Event listeners added...");
+function renderPage() {
+    renderProjects();
+    // addListeners();
+    console.log("Page rendered...");
 }
 
-function initPage() {
-    // selectElementsAgain();
-    addListeners();
-    renderDropdownMenu();
-    console.log("Page initialized...");
+function renderProjects() {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
+        const projectDiv = document.createElement("div");
+        projectDiv.classList = "project";
+        sideMenu.appendChild(projectDiv);
+        projectDiv.innerText = project.name;
+    });
 }
 
 function addProject() {
-    const newProject = document.createElement("li");
-    sidebarList.appendChild(newProject);
-    newProject.textContent = prompt("Enter project name");
-    console.log("Project added...");
-}
 
-function displayTodo() {
-    const newTodo = document.createElement("li");
-    todoList.appendChild(newTodo);
-    newTodo.textContent = _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos[getTodoLength() - 1].title + ", due Date: " + _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos[getTodoLength() - 1].dueDate;
-    addDeleteButton(newTodo);
-    clearForm();
-}
-
-function addDeleteButton(newTodo) {
-    newTodo.innerHTML += " " + `<button class="delete">x</button>`;
-}
-
-function getTodoLength() {
-    return _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.length;
-}
-
-function allFieldsFilled() {
-    if (titleField.value && descriptionField.value && dueDateField.value && priorityField.value) return true;
-    else false;
-}
-
-function getInputs() {
-    return { projectField, titleField, descriptionField, dueDateField, priorityField };
-}
-
-function clearForm() {
-    titleField.value = "";
-    descriptionField.value = "";
-    dueDateField.value = "";
-    priorityField.value = "";
-    console.log("Fields cleared...")
-}
-
-function renderDropdownMenu() {
-    const selectElement = document.querySelector("select");
-    let options = "";
-
-    for (let i = 0; i < _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects.length; i++) {
-        options += `<option value="${_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[i].name}">${_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[i].name}</option>`
-    }
-
-    selectElement.innerHTML = options;
 }
 
 console.log("domLoader.js has been executed");
+
+
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   projects: () => (/* binding */ projects)
+/* harmony export */ });
+/* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
+/* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
+
+
+
+// Create default project
+const projects = [];
+
+projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Work", "Well, I just like to work"));
+projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Hobbies", "I do have hobbies though"));
+projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Car", "Always broken"));
+
+(0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.renderPage)();
+
+console.log(projects);
 
 
 
@@ -213,55 +164,12 @@ console.log("domLoader.js has been executed");
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
-/* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
-
-
-
-let addProjectButton = document.querySelector(".sidebar button");
-let addTodoButton = document.querySelector(".todo-box button");
-let sidebar = document.querySelector(".sidebar");
-let sidebarList = document.querySelector(".sidebar ul")
-let todoList = document.querySelector(".todo-list ul");
-
-let projectField = document.querySelector("#project");
-let titleField = document.querySelector("#title");
-let descriptionField = document.querySelector("#description");
-let dueDateField = document.querySelector("#due-date");
-let priorityField = document.querySelector("#priority");
-
-addTodoButton.addEventListener("click", () => {
-    // if (allFieldsFilled()) {
-        createTodo();
-        (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.displayTodo)();
-    // }
-    // else alert("Please fill all fields to add a todo!");
-});
-
-function createTodo() {
-    _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.push(
-        (0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)(
-            titleField.value,
-            descriptionField.value,
-            dueDateField.value,
-            priorityField.value
-        )
-    );
-    console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0]);
-}
-
-(0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.initPage)();
-
-console.log(_appLogic__WEBPACK_IMPORTED_MODULE_0__.projects);
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
