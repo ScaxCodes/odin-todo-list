@@ -22,11 +22,6 @@ projects[0] = {
     todos: [],
 }
 
-projects[1] = {
-    name: "Hallo",
-    todos: [],
-}
-
 const todoFactory = (title, description, dueDate, priority) => {
     // const showTitle = () => console.log(title);
     console.log("Todo added...");
@@ -104,6 +99,8 @@ function addProject() {
     const newProject = document.createElement("li");
     sidebarList.appendChild(newProject);
     newProject.textContent = prompt("Enter project name");
+    _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects.push({ name: newProject.textContent, todos: [], });
+    renderDropdownMenu();
     console.log("Project added...");
 }
 
@@ -112,7 +109,14 @@ function displayTodo() {
     todoList.appendChild(newTodo);
     newTodo.textContent = _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos[getTodoLength() - 1].title + ", due Date: " + _appLogic__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos[getTodoLength() - 1].dueDate;
     addDeleteButton(newTodo);
+    todoAddListener(newTodo);
     clearForm();
+}
+
+function todoAddListener(newTodo) {
+    newTodo.addEventListener("click", () => {
+        newTodo.innerHTML += "Helloooooo";
+    });
 }
 
 function addDeleteButton(newTodo) {
