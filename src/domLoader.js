@@ -3,6 +3,7 @@ import { todoFactory, projectFactory } from "./appLogic";
 
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
+const mainTodos = document.querySelector(".main-todos");
 const popup = document.querySelector(".popup");
 const popupContainer = document.querySelector(".popup-container");
 const titleInput = document.querySelector("#project-title");
@@ -16,6 +17,7 @@ const descriptionInput = document.querySelector("#project-description");
 function renderPage() {
     renderSidebar();
     renderMainHeader();
+    renderMain();
     getDynamicEventListeners();
     console.log("Page rendered...");
 }
@@ -46,6 +48,29 @@ function renderMainHeader() {
             headerDescription.innerText = project.description;
         }
     });
+}
+
+function renderMain() {
+    projects[0].todos.forEach(todo => {
+        const todoDiv = document.createElement("div");
+        todoDiv.classList.add("todo-container");
+        mainTodos.appendChild(todoDiv)
+
+        const todoTitle = document.createElement("div");
+        todoTitle.classList.add("todo-title");
+        todoDiv.appendChild(todoTitle);
+        todoTitle.innerText = todo.title;
+
+        const todoDescription = document.createElement("div");
+        todoDescription.classList.add("todo-description");
+        todoDiv.appendChild(todoDescription);
+        todoDescription.innerText = todo.description;
+    });
+
+    const addTodoButton = document.createElement("div");
+    addTodoButton.classList.add("add-todo-button");
+    mainTodos.appendChild(addTodoButton);
+    addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
 }
 
 function getDynamicEventListeners() {
@@ -98,6 +123,7 @@ function clearInputs() {
     descriptionInput.value = "";
 }
 
+// TODO: Make sideMenu logic same as mainHeader (clear sideHeader instead of whole sideMenu)
 function clearWebsite() {
     sideMenu.innerHTML = `
         <div class="side-header">

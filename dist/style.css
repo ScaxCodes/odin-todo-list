@@ -36,7 +36,7 @@ body {
   background-color: rgb(255, 107, 132);
   margin: 10px 10px 10px auto;
   padding: 5px 10px;
-  width: 60%;
+  width: 150px;
   font-size: 1rem;
   display: flex;
   gap: 10px;
@@ -45,6 +45,21 @@ body {
 
 .add-project-button:hover {
   background-color: rgb(207, 86, 106);
+}
+
+.add-todo-button {
+  background-color: rgb(215, 133, 0);
+  margin: 10px 30px;
+  padding: 5px 10px;
+  width: 150px;
+  font-size: 1rem;
+  display: flex;
+  gap: 10px;
+  border-radius: 5px;
+}
+
+.add-todo-button:hover {
+  background-color: rgb(179, 110, 0);
 }
 
 .main {
@@ -110,6 +125,23 @@ body {
 
 .add-button:hover, .cancel-button:hover {
   transform: scale(1.1);
+}
+
+.todo-container {
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(241, 116, 7);
+}
+
+.todo-title {
+  font-size: 80%;
+  font-weight: 500;
+  margin: 0px 20px 0 0;
+}
+
+.todo-description {
+  font-size: 80%;
 }
 
 input {

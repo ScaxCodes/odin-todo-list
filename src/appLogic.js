@@ -7,7 +7,7 @@ function todoFactory(title, description, dueDate, priority) {
 
 function projectFactory(name, description) {
     console.log("Project added...");
-    return { name, description, active: false };
+    return { name, description, active: false, todos: [] };
     // return { name, description, todos: [], };
 }
 
