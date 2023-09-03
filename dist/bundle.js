@@ -102,7 +102,7 @@ function renderMain() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects[0].todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo-container");
-        mainTodos.appendChild(todoDiv)
+        mainTodos.appendChild(todoDiv);
 
         const todoTitle = document.createElement("div");
         todoTitle.classList.add("todo-title");
@@ -137,6 +137,12 @@ function getDynamicEventListeners() {
         popup.style.display = "flex";
         popupContainer.style.display = "flex";
     });
+
+    const addTodoButton = document.querySelector(".add-todo-button");
+    addTodoButton.addEventListener("click", () => {
+        addTodoButton.style.display = "none";
+        renderAddTodoDiv();
+    });
 }
 
 function getStaticEventListeners() {
@@ -158,6 +164,30 @@ function getStaticEventListeners() {
             renderPage();
         }
     });
+}
+
+function renderAddTodoDiv() {
+    const addTodoDiv = document.createElement("div");
+    addTodoDiv.classList.add("add-todo-container");
+    mainTodos.appendChild(addTodoDiv);
+    
+    const addTodoInputs = document.createElement("div");
+    addTodoInputs.classList.add("add-todo-inputs");
+    addTodoDiv.appendChild(addTodoInputs)
+    addTodoInputs.innerHTML = `
+    <input type="text" id="todo-title" placeholder="Enter todo name">
+    <input type="text" id="todo-description" placeholder="Enter description">
+    `
+
+    const addTodoAddButton = document.createElement("div");
+    addTodoAddButton.classList.add("add-todo-add-button");
+    addTodoDiv.appendChild(addTodoAddButton);
+    addTodoAddButton.innerText = "Add Todo";
+
+    const addTodoCancelButton = document.createElement("div");
+    addTodoCancelButton.classList.add("add-todo-cancel-button");
+    addTodoDiv.appendChild(addTodoCancelButton);
+    addTodoCancelButton.innerText = "Cancel";
 }
 
 function clearActiveProjects() {
