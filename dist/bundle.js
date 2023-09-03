@@ -57,6 +57,8 @@ const popupContainer = document.querySelector(".popup-container");
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
+const addTodoButton = document.createElement("div");
+
 // function addListeners() {
 //     addProjectButton.addEventListener("click", addProject);
 //     console.log("Event listeners added...");
@@ -115,7 +117,6 @@ function renderMain() {
         todoDescription.innerText = todo.description;
     });
 
-    const addTodoButton = document.createElement("div");
     addTodoButton.classList.add("add-todo-button");
     mainTodos.appendChild(addTodoButton);
     addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
@@ -166,6 +167,8 @@ function getStaticEventListeners() {
     });
 }
 
+// Plus event listener, bad design?
+// addTodoButton global, as its needed in various functions, bad design?
 function renderAddTodoDiv() {
     const addTodoDiv = document.createElement("div");
     addTodoDiv.classList.add("add-todo-container");
@@ -188,6 +191,12 @@ function renderAddTodoDiv() {
     addTodoCancelButton.classList.add("add-todo-cancel-button");
     addTodoDiv.appendChild(addTodoCancelButton);
     addTodoCancelButton.innerText = "Cancel";
+
+    // See comment above
+    addTodoCancelButton.addEventListener("click", () => {
+        addTodoButton.style.display = "block";
+        addTodoDiv.style.display = "none";
+    });
 }
 
 function clearActiveProjects() {
