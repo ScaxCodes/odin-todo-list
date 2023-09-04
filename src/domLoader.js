@@ -53,7 +53,7 @@ function renderMainHeader() {
 }
 
 function renderMain() {
-    projects[0].todos.forEach(todo => {
+    projects[getActiveProject()].todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo-container");
         mainTodos.appendChild(todoDiv);
@@ -72,6 +72,14 @@ function renderMain() {
     addTodoButton.classList.add("add-todo-button");
     mainTodos.appendChild(addTodoButton);
     addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
+}
+
+function getActiveProject() {
+    let index = 0;
+    projects.forEach((project, i) => {
+        if (project.active) index = i;
+    });
+    return index;
 }
 
 function getDynamicEventListeners() {
@@ -149,6 +157,17 @@ function renderAddTodoDiv() {
         addTodoButton.style.display = "block";
         addTodoDiv.style.display = "none";
     });
+
+    addTodoAddButton.addEventListener("click", () => {
+        const todoTitleInput = document.querySelector("#todo-title");
+        const todoDescriptionInput = document.querySelector("#todo-description");
+        if (todoTitleInput.value === "") alert("Please enter a title!");
+        else {
+            addTodoButton.style.display = "block";
+            addTodoDiv.style.display = "none";
+            addTodo(todoTitleInput.value, todoDescriptionInput.value);
+        }
+    });
 }
 
 function clearActiveProjects() {
@@ -170,10 +189,11 @@ function clearWebsite() {
         </div>
     `;
     mainHeader.innerHTML = "";
+    mainTodos.innerHTML = "";
 }
 
-function addProject() {
-
+function addTodo(name, description) {
+    projects[getActiveProject()].todos.push(todoFactory(name, description, null, null));
 }
 
 console.log("domLoader.js has been executed");
