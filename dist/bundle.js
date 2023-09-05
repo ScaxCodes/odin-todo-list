@@ -147,11 +147,7 @@ function getDynamicEventListeners() {
         popupContainer.style.display = "flex";
     });
 
-    const addTodoButton = document.querySelector(".add-todo-button");
-    addTodoButton.addEventListener("click", () => {
-        addTodoButton.style.display = "none";
-        renderAddTodoDiv();
-    });
+
 }
 
 function getStaticEventListeners() {
@@ -172,6 +168,12 @@ function getStaticEventListeners() {
             clearWebsite();
             renderPage();
         }
+    });
+
+    const addTodoButton = document.querySelector(".add-todo-button");
+    addTodoButton.addEventListener("click", () => {
+        addTodoButton.style.display = "none";
+        renderAddTodoDiv();
     });
 }
 
@@ -203,7 +205,9 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         addTodoButton.style.display = "block";
-        addTodoDiv.style.display = "none";
+        // addTodoDiv.style.display = "none";
+        clearWebsite();
+        renderPage();
     });
 
     addTodoAddButton.addEventListener("click", () => {
@@ -214,6 +218,8 @@ function renderAddTodoDiv() {
             addTodoButton.style.display = "block";
             addTodoDiv.style.display = "none";
             addTodo(todoTitleInput.value, todoDescriptionInput.value);
+            clearWebsite();
+            renderPage();
         }
     });
 }
