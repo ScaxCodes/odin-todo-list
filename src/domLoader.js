@@ -58,6 +58,11 @@ function renderMain() {
         todoDiv.classList.add("todo-container");
         mainTodos.appendChild(todoDiv);
 
+        const todoIcon = document.createElement("div");
+        todoIcon.classList.add("todo-icon");
+        todoDiv.appendChild(todoIcon);
+        todoIcon.innerHTML = `<img src="circle.svg">`;
+
         const todoTitle = document.createElement("div");
         todoTitle.classList.add("todo-title");
         todoDiv.appendChild(todoTitle);
@@ -156,7 +161,7 @@ function renderAddTodoDiv() {
 
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
-        addTodoButton.style.display = "block";
+        addTodoButton.style.display = "flex";
         // addTodoDiv.style.display = "none";
         clearWebsite();
         renderPage();
