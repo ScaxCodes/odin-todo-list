@@ -129,9 +129,14 @@ body {
 
 .todo-container {
   display: flex;
+  align-items: center;
   margin: 10px;
   padding: 10px;
   background-color: rgb(241, 116, 7);
+}
+
+.todo-container:hover {
+  background-color: rgb(173, 86, 9);
 }
 
 .add-todo-container {
@@ -143,10 +148,20 @@ body {
   background-color: rgb(241, 116, 7);
 }
 
+.todo-icon {
+  display: flex; 
+  align-items: center;
+  margin: 0 5px 0 0;
+}
+
+.todo-icon img {
+  height: 16px;
+}
+
 .todo-title {
   font-size: 80%;
   font-weight: 500;
-  margin: 0px 20px 0 0;
+  margin: 0 20px 0 0;
 }
 
 .todo-description {
