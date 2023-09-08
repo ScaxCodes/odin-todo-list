@@ -2,7 +2,7 @@ import { projects } from "./index";
 
 function todoFactory(title, description, dueDate, priority) {
     console.log("Todo added...");
-    return { title, description, dueDate, priority };
+    return { title, description, dueDate, priority, done: false };
 }
 
 function projectFactory(name, description) {

@@ -72,6 +72,11 @@ function renderMain() {
         todoDescription.classList.add("todo-description");
         todoDiv.appendChild(todoDescription);
         todoDescription.innerText = todo.description;
+
+        if (todo.done === true) {
+            todoIcon.innerHTML = `<img src="check-circle.svg">`;
+            todoDiv.classList.add("done");
+        }
     });
 
     addTodoButton.classList.add("add-todo-button");
@@ -104,6 +109,17 @@ function getDynamicEventListeners() {
         popupContainer.style.display = "flex";
     });
 
+    const todoButtons = document.querySelectorAll(".todo-container");
+    todoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            if (projects[getActiveProject()].todos[index].done === false) {
+                projects[getActiveProject()].todos[index].done = true;
+                console.log("Todo done...");
+                clearWebsite();
+                renderPage();
+            }
+        });
+    });
 
 }
 
