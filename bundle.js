@@ -18,7 +18,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function todoFactory(title, description, dueDate, priority) {
     console.log("Todo added...");
-    return { title, description, dueDate, priority };
+    return { title, description, dueDate, priority, done: false };
 }
 
 function projectFactory(name, description) {
@@ -120,6 +120,11 @@ function renderMain() {
         todoDescription.classList.add("todo-description");
         todoDiv.appendChild(todoDescription);
         todoDescription.innerText = todo.description;
+
+        if (todo.done === true) {
+            todoIcon.innerHTML = `<img src="check-circle.svg">`;
+            todoDiv.classList.add("done");
+        }
     });
 
     addTodoButton.classList.add("add-todo-button");
@@ -152,6 +157,17 @@ function getDynamicEventListeners() {
         popupContainer.style.display = "flex";
     });
 
+    const todoButtons = document.querySelectorAll(".todo-container");
+    todoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            if (_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].done === false) {
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].done = true;
+                console.log("Todo done...");
+                clearWebsite();
+                renderPage();
+            }
+        });
+    });
 
 }
 
