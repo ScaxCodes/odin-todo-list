@@ -157,12 +157,16 @@ function renderAddTodoDiv() {
     addTodoDiv.classList.add("add-todo-container");
     mainTodos.appendChild(addTodoDiv);
     
+    const todayDate = new Date().toISOString().slice(0, 10);
+
     const addTodoInputs = document.createElement("div");
     addTodoInputs.classList.add("add-todo-inputs");
     addTodoDiv.appendChild(addTodoInputs)
     addTodoInputs.innerHTML = `
     <input type="text" id="todo-title" placeholder="Enter todo name">
     <input type="text" id="todo-description" placeholder="Enter description">
+    <label for="due-date">Due date:</label>
+    <input type="date" id="due-date" name="due-date" value="${todayDate}">
     `
 
     const addTodoAddButton = document.createElement("div");
@@ -186,11 +190,12 @@ function renderAddTodoDiv() {
     addTodoAddButton.addEventListener("click", () => {
         const todoTitleInput = document.querySelector("#todo-title");
         const todoDescriptionInput = document.querySelector("#todo-description");
+        const todoDueDate = document.querySelector("#due-date");
         if (todoTitleInput.value === "") alert("Please enter a title!");
         else {
             addTodoButton.style.display = "block";
             addTodoDiv.style.display = "none";
-            addTodo(todoTitleInput.value, todoDescriptionInput.value);
+            addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             clearWebsite();
             renderPage();
         }
@@ -219,8 +224,8 @@ function clearWebsite() {
     mainTodos.innerHTML = "";
 }
 
-function addTodo(name, description) {
-    projects[getActiveProject()].todos.push(todoFactory(name, description, null, null));
+function addTodo(name, description, dueDate) {
+    projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
 }
 
 console.log("domLoader.js has been executed");
