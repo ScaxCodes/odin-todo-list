@@ -189,7 +189,8 @@ div.add-todo-container input {
   font-size: 80%;
 }
 
-div.add-todo-container input:nth-child(1) {
+div.add-todo-container input:nth-child(1),
+div.add-todo-container input:nth-child(2) {
   margin: 0 0 10px 0;
 }
 
