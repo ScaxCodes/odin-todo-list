@@ -73,6 +73,16 @@ function renderMain() {
         todoDiv.appendChild(todoDescription);
         todoDescription.innerText = todo.description;
 
+        const todoEdit = document.createElement("div");
+        todoEdit.classList.add("todo-edit");
+        todoDiv.appendChild(todoEdit);
+        todoEdit.innerHTML = `<img src="edit.svg">`;
+
+        const todoTrash = document.createElement("div");
+        todoTrash.classList.add("todo-trash");
+        todoDiv.appendChild(todoTrash);
+        todoTrash.innerHTML = `<img src="trash-2.svg">`;
+
         if (todo.done === true) {
             todoIcon.innerHTML = `<img src="check-circle.svg">`;
             todoDiv.classList.add("done");

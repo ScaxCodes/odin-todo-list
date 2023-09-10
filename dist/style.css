@@ -163,6 +163,26 @@ body {
   height: 16px;
 }
 
+.todo-trash {
+  display: flex; 
+  align-items: center;
+  margin: 0 0 0 10px;
+}
+
+.todo-trash img {
+  height: 20px;
+}
+
+.todo-edit {
+  display: flex; 
+  align-items: center;
+  margin: 0 0 0 auto;
+}
+
+.todo-edit img {
+  height: 20px;
+}
+
 .todo-title {
   font-size: 80%;
   font-weight: 500;
