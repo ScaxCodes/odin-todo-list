@@ -140,8 +140,12 @@ body {
   text-decoration: line-through;
 }
 
-.todo-container:hover {
-  background-color: rgb(173, 86, 9);
+.todo-icon:hover {
+  cursor: pointer;
+}
+
+.todo-trash:hover {
+  cursor: pointer;
 }
 
 .add-todo-container {
