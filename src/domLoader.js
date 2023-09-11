@@ -119,7 +119,7 @@ function getDynamicEventListeners() {
         popupContainer.style.display = "flex";
     });
 
-    const todoButtons = document.querySelectorAll(".todo-container");
+    const todoButtons = document.querySelectorAll(".todo-icon");
     todoButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             if (projects[getActiveProject()].todos[index].done === false) {
@@ -128,6 +128,16 @@ function getDynamicEventListeners() {
                 clearWebsite();
                 renderPage();
             }
+        });
+    });
+
+    const deleteTodoButtons = document.querySelectorAll(".todo-trash");
+    deleteTodoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            projects[getActiveProject()].todos.splice(index, 1);
+            console.log("Todo deleted");
+            clearWebsite();
+            renderPage();
         });
     });
 

@@ -167,7 +167,7 @@ function getDynamicEventListeners() {
         popupContainer.style.display = "flex";
     });
 
-    const todoButtons = document.querySelectorAll(".todo-container");
+    const todoButtons = document.querySelectorAll(".todo-icon");
     todoButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             if (_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].done === false) {
@@ -176,6 +176,16 @@ function getDynamicEventListeners() {
                 clearWebsite();
                 renderPage();
             }
+        });
+    });
+
+    const deleteTodoButtons = document.querySelectorAll(".todo-trash");
+    deleteTodoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.splice(index, 1);
+            console.log("Todo deleted");
+            clearWebsite();
+            renderPage();
         });
     });
 
