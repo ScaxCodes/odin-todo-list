@@ -189,6 +189,23 @@ function getDynamicEventListeners() {
         });
     });
 
+
+    const editTodoButtons = document.querySelectorAll(".todo-edit");
+    editTodoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
+            editTodoDiv.innerHTML = `
+            <input type="text" id="edit-todo-title" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].title}">
+            <input type="text" id="edit-todo-description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description}">
+            <input type="date" id="edit-due-date" name="due-date" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].dueDate}">
+            `;
+            // projects[getActiveProject()].todos.splice(index, 1);
+            // console.log("Todo deleted");
+            // clearWebsite();
+            // renderPage();
+        });
+    });
+
 }
 
 function getStaticEventListeners() {
@@ -233,7 +250,6 @@ function renderAddTodoDiv() {
     addTodoInputs.innerHTML = `
     <input type="text" id="todo-title" placeholder="Enter todo name">
     <input type="text" id="todo-description" placeholder="Enter description">
-    <label for="due-date">Due date:</label>
     <input type="date" id="due-date" name="due-date" value="${todayDate}">
     `
 
