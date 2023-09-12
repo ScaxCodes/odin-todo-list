@@ -133,6 +133,7 @@ body {
   margin: 10px;
   padding: 10px;
   background-color: rgb(241, 116, 7);
+  gap: 10px;
 }
 
 .todo-container.done {
@@ -148,6 +149,10 @@ body {
   cursor: pointer;
 }
 
+.todo-edit:hover {
+  cursor: pointer;
+}
+
 .add-todo-container {
   display: flex;
   gap: 20px;
@@ -160,7 +165,6 @@ body {
 .todo-icon {
   display: flex; 
   align-items: center;
-  margin: 0 5px 0 0;
 }
 
 .todo-icon img {
@@ -170,7 +174,6 @@ body {
 .todo-trash {
   display: flex; 
   align-items: center;
-  margin: 0 0 0 10px;
 }
 
 .todo-trash img {
@@ -190,7 +193,7 @@ body {
 .todo-title {
   font-size: 80%;
   font-weight: 500;
-  margin: 0 20px 0 0;
+  margin: 0 10px 0 0;
 }
 
 .todo-description {
@@ -206,6 +209,14 @@ div.popup input {
 }
 
 div.add-todo-container input {
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 80%;
+  font-size: 80%;
+}
+
+div.todo-container input {
   padding: 5px;
   border-radius: 10px;
   border: 2px solid black;
