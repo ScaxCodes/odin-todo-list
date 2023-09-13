@@ -196,13 +196,31 @@ function getDynamicEventListeners() {
             const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
             editTodoDiv.innerHTML = `
             <input type="text" id="edit-todo-title" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].title}">
-            <input type="text" id="edit-todo-description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description}">
+            <input type="text" id="edit-todo-description" placeholder="Enter description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description}">
             <input type="date" id="edit-due-date" name="due-date" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].dueDate}">
+            <div class="save-edit edit-button">Save</div>
+            <div class="cancel-edit edit-button">Cancel</div>
             `;
-            // projects[getActiveProject()].todos.splice(index, 1);
-            // console.log("Todo deleted");
-            // clearWebsite();
-            // renderPage();
+            const editTitleInput = document.querySelector("#edit-todo-title");
+            const editDescriptionInput = document.querySelector("#edit-todo-description");
+            const editDueDateInput = document.querySelector("#edit-due-date");
+
+            const saveEditButton = document.querySelector(".save-edit");
+            saveEditButton.addEventListener("click", () => {
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].title = editTitleInput.value;
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description = editDescriptionInput.value;
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].dueDate = editDueDateInput.value;
+                console.log("Edit saved...")
+                clearWebsite();
+                renderPage();
+            });
+
+            const cancelEditButton = document.querySelector(".cancel-edit");
+            cancelEditButton.addEventListener("click", () => {
+                console.log("Edit canceled...")
+                clearWebsite();
+                renderPage();
+            });
         });
     });
 
