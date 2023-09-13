@@ -115,11 +115,23 @@ body {
   text-align: center;
 }
 
-.add-button {
+.edit-button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.edit-button:hover {
+  cursor: pointer;
+}
+
+.add-button, .save-edit {
   background-color: rgb(90, 177, 90);
 }
 
-.cancel-button {
+.cancel-button, .cancel-edit {
   background-color: rgb(209, 101, 101);
 }
 
