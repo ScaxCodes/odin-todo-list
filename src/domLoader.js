@@ -92,6 +92,7 @@ function renderMain() {
     addTodoButton.classList.add("add-todo-button");
     mainTodos.appendChild(addTodoButton);
     addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
+    addTodoButton.style.display = "flex";
 }
 
 function getActiveProject() {
