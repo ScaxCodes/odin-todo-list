@@ -1,5 +1,6 @@
 import { projects } from "./index";
 import { todoFactory, projectFactory } from "./appLogic";
+import { format, formatDistance, formatRelative, subDays, isToday, parseISO } from 'date-fns'
 
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
@@ -76,7 +77,8 @@ function renderMain() {
         const todoDueDate = document.createElement("div");
         todoDueDate.classList.add("todo-due-date");
         todoDiv.appendChild(todoDueDate);
-        todoDueDate.innerText = "- calc days left here -";
+        if (isToday(parseISO(todo.dueDate))) todoDueDate.innerText = "today";
+        else todoDueDate.innerText = formatDistance(new Date(parseISO(todo.dueDate)), new Date(), { addSuffix: true });
 
         const todoEdit = document.createElement("div");
         todoEdit.classList.add("todo-edit");
