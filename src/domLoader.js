@@ -73,6 +73,11 @@ function renderMain() {
         todoDiv.appendChild(todoDescription);
         todoDescription.innerText = todo.description;
 
+        const todoDueDate = document.createElement("div");
+        todoDueDate.classList.add("todo-due-date");
+        todoDiv.appendChild(todoDueDate);
+        todoDueDate.innerText = "- calc days left here -";
+
         const todoEdit = document.createElement("div");
         todoEdit.classList.add("todo-edit");
         todoDiv.appendChild(todoEdit);
