@@ -140,6 +140,7 @@ function renderMain() {
     addTodoButton.classList.add("add-todo-button");
     mainTodos.appendChild(addTodoButton);
     addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
+    addTodoButton.style.display = "flex";
 }
 
 function getActiveProject() {
@@ -356,8 +357,8 @@ const projects = [];
 
 projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Work", "Well, I just like to work"));
 projects[0].active = true;
-projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "02.09.2023", null));
-projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Another Default One", "I love Hackerhouse Berlin", "02.09.2023", null));
+projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "2023-09-02", null));
+projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Another Default One", "I love Hackerhouse Berlin", "2023-09-02", null));
 
 projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Hobbies", "I do have hobbies though"));
 projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Car", "Always broken"));
