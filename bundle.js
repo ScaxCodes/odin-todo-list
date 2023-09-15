@@ -2448,13 +2448,9 @@ __webpack_require__.r(__webpack_exports__);
 // Create default project
 const projects = [];
 
-projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Work", "Well, I just like to work"));
+projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Default Project", "Well, this is just a template"));
 projects[0].active = true;
-projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "2023-09-02", null));
-projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Another Default One", "I love Hackerhouse Berlin", "2023-09-02", null));
-
-projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Hobbies", "I do have hobbies though"));
-projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Car", "Always broken"));
+projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "2023-09-15", null));
 
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.renderPage)();
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
