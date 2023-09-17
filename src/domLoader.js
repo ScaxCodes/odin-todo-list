@@ -1,5 +1,5 @@
 import { projects } from './index';
-import { projectFactory, addTodo, getActiveProject } from "./appLogic";
+import { projectFactory, addTodo, getActiveProject, clearActiveProjects } from "./appLogic";
 import { renderPage } from "./render";
 
 
@@ -169,12 +169,6 @@ function renderAddTodoDiv() {
     });
 }
 
-function clearActiveProjects() {
-    projects.forEach(project => {
-        project.active = false;
-    });
-}
-
 function clearInputs() {
     titleInput.value = "";
     descriptionInput.value = "";
@@ -200,3 +194,4 @@ function saveLocalStorage() {
 console.log("domLoader.js has been executed");
 
 export { renderPage, getStaticEventListeners, getDynamicEventListeners, addTodo };
+export { addTodoButton };

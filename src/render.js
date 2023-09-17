@@ -1,6 +1,7 @@
 import { projects } from "./index";
 import { getActiveProject } from "./appLogic";
 import { getDynamicEventListeners } from "./domLoader";
+import { addTodoButton } from "./domLoader";
 import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
 import iconCheckCircle from './check-circle.svg';
@@ -19,7 +20,6 @@ function renderPage() {
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
 const mainTodos = document.querySelector(".main-todos");
-const addTodoButton = document.createElement("div");
 
 function renderSidebar() {
     projects.forEach(project => {

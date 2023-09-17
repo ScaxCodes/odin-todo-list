@@ -26,6 +26,12 @@ function getActiveProject() {
     return index;
 }
 
+function clearActiveProjects() {
+    projects.forEach(project => {
+        project.active = false;
+    });
+}
+
 console.log("appLogic.js has been executed");
 
-export { todoFactory, projectFactory, addProject, addTodo, getActiveProject };
+export { todoFactory, projectFactory, addProject, addTodo, getActiveProject, clearActiveProjects };

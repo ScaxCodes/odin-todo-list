@@ -3267,6 +3267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addProject: () => (/* binding */ addProject),
 /* harmony export */   addTodo: () => (/* binding */ addTodo),
+/* harmony export */   clearActiveProjects: () => (/* binding */ clearActiveProjects),
 /* harmony export */   getActiveProject: () => (/* binding */ getActiveProject),
 /* harmony export */   projectFactory: () => (/* binding */ projectFactory),
 /* harmony export */   todoFactory: () => (/* binding */ todoFactory)
@@ -3300,6 +3301,12 @@ function getActiveProject() {
     return index;
 }
 
+function clearActiveProjects() {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
+        project.active = false;
+    });
+}
+
 console.log("appLogic.js has been executed");
 
 
@@ -3315,6 +3322,7 @@ console.log("appLogic.js has been executed");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addTodo: () => (/* reexport safe */ _appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo),
+/* harmony export */   addTodoButton: () => (/* binding */ addTodoButton),
 /* harmony export */   getDynamicEventListeners: () => (/* binding */ getDynamicEventListeners),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
 /* harmony export */   renderPage: () => (/* reexport safe */ _render__WEBPACK_IMPORTED_MODULE_2__.renderPage)
@@ -3341,7 +3349,7 @@ function getDynamicEventListeners() {
     const projectButtons = document.querySelectorAll(".project");
     projectButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
-            clearActiveProjects();
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.clearActiveProjects)();
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
             clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
@@ -3493,12 +3501,6 @@ function renderAddTodoDiv() {
     });
 }
 
-function clearActiveProjects() {
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
-        project.active = false;
-    });
-}
-
 function clearInputs() {
     titleInput.value = "";
     descriptionInput.value = "";
@@ -3522,6 +3524,7 @@ function saveLocalStorage() {
 }
 
 console.log("domLoader.js has been executed");
+
 
 
 
@@ -3601,6 +3604,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function renderPage() {
     renderSidebar();
     renderMainHeader();
@@ -3612,7 +3616,6 @@ function renderPage() {
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
 const mainTodos = document.querySelector(".main-todos");
-const addTodoButton = document.createElement("div");
 
 function renderSidebar() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
@@ -3685,10 +3688,10 @@ function renderMain() {
         }
     });
 
-    addTodoButton.classList.add("add-todo-button");
-    mainTodos.appendChild(addTodoButton);
-    addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
-    addTodoButton.style.display = "flex";
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.classList.add("add-todo-button");
+    mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton);
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.style.display = "flex";
 }
 
 
