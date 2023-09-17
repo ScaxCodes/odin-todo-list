@@ -3265,6 +3265,9 @@ module.exports = styleTagTransform;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addProject: () => (/* binding */ addProject),
+/* harmony export */   addTodo: () => (/* binding */ addTodo),
+/* harmony export */   getActiveProject: () => (/* binding */ getActiveProject),
 /* harmony export */   projectFactory: () => (/* binding */ projectFactory),
 /* harmony export */   todoFactory: () => (/* binding */ todoFactory)
 /* harmony export */ });
@@ -3281,6 +3284,22 @@ function projectFactory(name, description) {
     return { name, description, active: false, todos: [] };
 }
 
+function addProject(name, description) {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.push(projectFactory(name, description));
+}
+
+function addTodo(name, description, dueDate) {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
+}
+
+function getActiveProject() {
+    let index = 0;
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach((project, i) => {
+        if (project.active) index = i;
+    });
+    return index;
+}
+
 console.log("appLogic.js has been executed");
 
 
@@ -3295,6 +3314,7 @@ console.log("appLogic.js has been executed");
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addTodo: () => (/* reexport safe */ _appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
 /* harmony export */   renderPage: () => (/* binding */ renderPage)
 /* harmony export */ });
@@ -3365,7 +3385,7 @@ function renderMainHeader() {
 }
 
 function renderMain() {
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.forEach(todo => {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo-container");
         mainTodos.appendChild(todoDiv);
@@ -3413,14 +3433,6 @@ function renderMain() {
     addTodoButton.style.display = "flex";
 }
 
-function getActiveProject() {
-    let index = 0;
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach((project, i) => {
-        if (project.active) index = i;
-    });
-    return index;
-}
-
 function getDynamicEventListeners() {
     const projectButtons = document.querySelectorAll(".project");
     projectButtons.forEach((btn, index) => {
@@ -3441,8 +3453,8 @@ function getDynamicEventListeners() {
     const todoButtons = document.querySelectorAll(".todo-icon");
     todoButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
-            if (_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].done === false) {
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].done = true;
+            if (_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done === false) {
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done = true;
                 console.log("Todo done...");
                 clearWebsite();
                 renderPage();
@@ -3453,7 +3465,7 @@ function getDynamicEventListeners() {
     const deleteTodoButtons = document.querySelectorAll(".todo-trash");
     deleteTodoButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
-            _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.splice(index, 1);
+            _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.splice(index, 1);
             console.log("Todo deleted");
             saveLocalStorage();
             clearWebsite();
@@ -3467,9 +3479,9 @@ function getDynamicEventListeners() {
         btn.addEventListener("click", () => {
             const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
             editTodoDiv.innerHTML = `
-            <input type="text" id="edit-todo-title" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].title}">
-            <input type="text" id="edit-todo-description" placeholder="Enter description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description}">
-            <input type="date" id="edit-due-date" name="due-date" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].dueDate}">
+            <input type="text" id="edit-todo-title" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].title}">
+            <input type="text" id="edit-todo-description" placeholder="Enter description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].description}">
+            <input type="date" id="edit-due-date" name="due-date" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate}">
             <div class="save-edit edit-button">Save</div>
             <div class="cancel-edit edit-button">Cancel</div>
             `;
@@ -3479,9 +3491,9 @@ function getDynamicEventListeners() {
 
             const saveEditButton = document.querySelector(".save-edit");
             saveEditButton.addEventListener("click", () => {
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].title = editTitleInput.value;
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description = editDescriptionInput.value;
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].dueDate = editDueDateInput.value;
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].title = editTitleInput.value;
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].description = editDescriptionInput.value;
+                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate = editDueDateInput.value;
                 console.log("Edit saved...")
                 clearWebsite();
                 renderPage();
@@ -3569,7 +3581,7 @@ function renderAddTodoDiv() {
         else {
             addTodoButton.style.display = "block";
             addTodoDiv.style.display = "none";
-            addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             saveLocalStorage();
             clearWebsite();
             renderPage();
@@ -3597,10 +3609,6 @@ function clearWebsite() {
     `;
     mainHeader.innerHTML = "";
     mainTodos.innerHTML = "";
-}
-
-function addTodo(name, description, dueDate) {
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.todoFactory)(name, description, dueDate, null));
 }
 
 function saveLocalStorage() {
@@ -3636,24 +3644,21 @@ __webpack_require__.r(__webpack_exports__);
 
 let projects = [];
 
-
 if (!localStorage.getItem("projects")) {
     // Create default project
-    console.log("Storage 404");
+    console.log("Local storage not found!");
 
-    projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Default Project", "Well, this is just a template"));
+    (0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.addProject)("Default Project", "Well, this is just a template");
     projects[0].active = true;
-    projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "2023-09-15", null));
+    (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.addTodo)("Default Todo", "Enter some description here", "2023-09-15");
   } else {
     // Load projects/todos from local storage
     projects = JSON.parse(localStorage.getItem("projects"));
-    console.log("Storage has been found");
+    console.log("Local storage has been found!");
   }
 
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.renderPage)();
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
-
-console.log(projects);
 
 
 
