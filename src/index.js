@@ -1,5 +1,6 @@
 import { addProject } from "./appLogic";
-import { renderPage, getStaticEventListeners, addTodo } from "./domLoader";
+import { getStaticEventListeners, addTodo } from "./domLoader";
+import { renderPage } from "./render";
 import "./normalize.css";
 import "./style.css";
 
