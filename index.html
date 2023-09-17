@@ -9,33 +9,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="sidebar">
-        <button>Add Project</button><br>
-        <ul>
-            <li>Default Project</li>
-        </ul>
+    <div class="popup-container">
+        <div class="popup">
+            <label for="project-title">Title</label>
+            <input type="text" id="project-title" placeholder="Enter project name">
+            <label for="project-description">Description</label>
+            <input type="text" id="project-description" placeholder="Enter description">
+            <div class="popup-container-button-container">
+                <div class="add-button">Add</div>
+                <div class="cancel-button">Cancel</div>
+            </div>
+        </div>
     </div>
-    <div class="content">
-        <div class="todo-box">
-            <label for="project">Project</label>
-            <select name="project" id="project">
-            </select>
-            <br>
-            <label for="id">Title</label>
-            <input type="text" id="title">
-            <label for="description">Description</label>
-            <input type="text" id="description">
-            <label for="due-date">Due date</label>
-            <input type="text" id="due-date">
-            <label for="priority">Priority</label>
-            <input type="text" id="priority">
-            <button>Add Todo</button>
+    <div class="side-menu">
+        <div class="side-header">
+            <h2>Projects</h2>
         </div>
-        <div class="todo-list">
-            <h1>Todo-List</h1>
-            <h2>Default Project</h2>
-            <ul></ul>
-        </div>
+    </div>
+    <div class="main">
+        <div class="main-header"></div>
+        <div class="main-todos"></div>
     </div>
 </body>
 </html>
