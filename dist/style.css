@@ -13,27 +13,34 @@ body {
 }
 
 .side-menu {
-  background-color: pink;
+  background-color: #e3e3e8;
   padding: 20px;
 }
 
+.side-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
 .project {
-  background-color: rgb(250, 164, 179);
+  background-color: #b9a7a8;
   margin: 10px;
   padding: 10px;
 }
 
 .project:hover {
-  background-color: rgb(181, 134, 142);
+  background-color: #b9a7a899;
+  cursor: pointer;
 }
 
 .project.active {
-  border: 3px solid rgb(255, 107, 132);
+  border: 3px solid #738e71;
   padding: 7px;
 }
 
 .add-project-button {
-  background-color: rgb(255, 107, 132);
+  background-color: #738e71;
   margin: 10px 10px 10px auto;
   padding: 5px 10px;
   width: 150px;
@@ -44,11 +51,12 @@ body {
 }
 
 .add-project-button:hover {
-  background-color: rgb(207, 86, 106);
+  background-color: #738e7199;
+  cursor: pointer;
 }
 
 .add-todo-button {
-  background-color: rgb(215, 133, 0);
+  background-color: #738e71;
   margin: 10px 30px;
   padding: 5px 10px;
   width: 150px;
@@ -59,11 +67,11 @@ body {
 }
 
 .add-todo-button:hover {
-  background-color: rgb(179, 110, 0);
+  background-color: #738e7199;
 }
 
 .main {
-  background-color: sandybrown;
+  background-color: #ebebef;
 }
 
 .main-header div:nth-child(1) {
@@ -144,12 +152,12 @@ body {
   align-items: center;
   margin: 10px;
   padding: 10px;
-  background-color: rgb(241, 116, 7);
+  background-color: #b9a7a8;
   gap: 10px;
 }
 
 .todo-container.done {
-  background-color: rgb(173, 86, 9);
+  background-color: #968888;
   text-decoration: line-through;
 }
 
@@ -171,7 +179,7 @@ body {
   align-items: center;
   margin: 10px;
   padding: 10px;
-  background-color: rgb(241, 116, 7);
+  background-color: #b9a7a8;
 }
 
 .todo-icon {
