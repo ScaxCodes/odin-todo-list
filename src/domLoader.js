@@ -1,5 +1,5 @@
 import { projects } from './index';
-import { projectFactory, addTodo, getActiveProject, clearActiveProjects } from "./appLogic";
+import { projectFactory, addTodo, getActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
 import { renderPage } from "./render";
 
 
@@ -183,12 +183,6 @@ function clearWebsite() {
     `;
     mainHeader.innerHTML = "";
     mainTodos.innerHTML = "";
-}
-
-function saveLocalStorage() {
-    localStorage.setItem('projects', JSON.stringify(projects));
-
-    console.log("Saved projects/todos to local storage...");
 }
 
 console.log("domLoader.js has been executed");

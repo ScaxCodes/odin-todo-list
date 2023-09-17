@@ -32,6 +32,12 @@ function clearActiveProjects() {
     });
 }
 
+function saveLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+
+    console.log("Saved projects/todos to local storage...");
+}
+
 console.log("appLogic.js has been executed");
 
-export { todoFactory, projectFactory, addProject, addTodo, getActiveProject, clearActiveProjects };
+export { todoFactory, projectFactory, addProject, addTodo, getActiveProject, clearActiveProjects, saveLocalStorage };

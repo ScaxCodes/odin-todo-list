@@ -3270,6 +3270,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   clearActiveProjects: () => (/* binding */ clearActiveProjects),
 /* harmony export */   getActiveProject: () => (/* binding */ getActiveProject),
 /* harmony export */   projectFactory: () => (/* binding */ projectFactory),
+/* harmony export */   saveLocalStorage: () => (/* binding */ saveLocalStorage),
 /* harmony export */   todoFactory: () => (/* binding */ todoFactory)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
@@ -3305,6 +3306,12 @@ function clearActiveProjects() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         project.active = false;
     });
+}
+
+function saveLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(_index__WEBPACK_IMPORTED_MODULE_0__.projects));
+
+    console.log("Saved projects/todos to local storage...");
 }
 
 console.log("appLogic.js has been executed");
@@ -3379,7 +3386,7 @@ function getDynamicEventListeners() {
         btn.addEventListener("click", () => {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.splice(index, 1);
             console.log("Todo deleted");
-            saveLocalStorage();
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
@@ -3436,7 +3443,7 @@ function getStaticEventListeners() {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.projectFactory)(titleInput.value, descriptionInput.value));
             popup.style.display = "none";
             popupContainer.style.display = "none";
-            saveLocalStorage();
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             clearInputs();
             clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
@@ -3494,7 +3501,7 @@ function renderAddTodoDiv() {
             addTodoButton.style.display = "block";
             addTodoDiv.style.display = "none";
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
-            saveLocalStorage();
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
@@ -3515,12 +3522,6 @@ function clearWebsite() {
     `;
     mainHeader.innerHTML = "";
     mainTodos.innerHTML = "";
-}
-
-function saveLocalStorage() {
-    localStorage.setItem('projects', JSON.stringify(_index__WEBPACK_IMPORTED_MODULE_0__.projects));
-
-    console.log("Saved projects/todos to local storage...");
 }
 
 console.log("domLoader.js has been executed");
