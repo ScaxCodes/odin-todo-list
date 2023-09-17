@@ -3315,24 +3315,13 @@ console.log("appLogic.js has been executed");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addTodo: () => (/* reexport safe */ _appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo),
+/* harmony export */   getDynamicEventListeners: () => (/* binding */ getDynamicEventListeners),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
-/* harmony export */   renderPage: () => (/* binding */ renderPage)
+/* harmony export */   renderPage: () => (/* reexport safe */ _render__WEBPACK_IMPORTED_MODULE_2__.renderPage)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isToday/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/formatDistance/index.js");
-/* harmony import */ var _plus_square_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plus-square.svg */ "./src/plus-square.svg");
-/* harmony import */ var _check_circle_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./check-circle.svg */ "./src/check-circle.svg");
-/* harmony import */ var _circle_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./circle.svg */ "./src/circle.svg");
-/* harmony import */ var _edit_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit.svg */ "./src/edit.svg");
-/* harmony import */ var _trash_2_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./trash-2.svg */ "./src/trash-2.svg");
-
-
-
-
-
+/* harmony import */ var _render__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./render */ "./src/render.js");
 
 
 
@@ -3348,91 +3337,6 @@ const descriptionInput = document.querySelector("#project-description");
 
 const addTodoButton = document.createElement("div");
 
-function renderPage() {
-    renderSidebar();
-    renderMainHeader();
-    renderMain();
-    getDynamicEventListeners();
-    console.log("Page rendered...");
-}
-
-function renderSidebar() {
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
-        const projectDiv = document.createElement("div");
-        projectDiv.classList.add("project");
-        if (project.active) projectDiv.classList.add("active");
-        sideMenu.appendChild(projectDiv);
-        projectDiv.innerText = project.name;
-    });
-
-    const addProjectButton = document.createElement("div");
-    addProjectButton.classList.add("add-project-button");
-    sideMenu.appendChild(addProjectButton);
-    addProjectButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_2__}">Add Project`;
-}
-
-function renderMainHeader() {
-    const headerTitle = document.createElement("div");
-    mainHeader.appendChild(headerTitle);
-    const headerDescription = document.createElement("div");
-    mainHeader.appendChild(headerDescription);
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
-        if (project.active) {
-            headerTitle.innerText = project.name;
-            headerDescription.innerText = project.description;
-        }
-    });
-}
-
-function renderMain() {
-    _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.forEach(todo => {
-        const todoDiv = document.createElement("div");
-        todoDiv.classList.add("todo-container");
-        mainTodos.appendChild(todoDiv);
-
-        const todoIcon = document.createElement("div");
-        todoIcon.classList.add("todo-icon");
-        todoDiv.appendChild(todoIcon);
-        todoIcon.innerHTML = `<img src="${_circle_svg__WEBPACK_IMPORTED_MODULE_4__}">`;
-
-        const todoTitle = document.createElement("div");
-        todoTitle.classList.add("todo-title");
-        todoDiv.appendChild(todoTitle);
-        todoTitle.innerText = todo.title;
-
-        const todoDescription = document.createElement("div");
-        todoDescription.classList.add("todo-description");
-        todoDiv.appendChild(todoDescription);
-        todoDescription.innerText = todo.description;
-
-        const todoDueDate = document.createElement("div");
-        todoDueDate.classList.add("todo-due-date");
-        todoDiv.appendChild(todoDueDate);
-        if ((0,date_fns__WEBPACK_IMPORTED_MODULE_7__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_8__["default"])(todo.dueDate))) todoDueDate.innerText = "today";
-        else todoDueDate.innerText = (0,date_fns__WEBPACK_IMPORTED_MODULE_9__["default"])(new Date((0,date_fns__WEBPACK_IMPORTED_MODULE_8__["default"])(todo.dueDate)), new Date(), { addSuffix: true });
-
-        const todoEdit = document.createElement("div");
-        todoEdit.classList.add("todo-edit");
-        todoDiv.appendChild(todoEdit);
-        todoEdit.innerHTML = `<img src="${_edit_svg__WEBPACK_IMPORTED_MODULE_5__}">`;
-
-        const todoTrash = document.createElement("div");
-        todoTrash.classList.add("todo-trash");
-        todoDiv.appendChild(todoTrash);
-        todoTrash.innerHTML = `<img src="${_trash_2_svg__WEBPACK_IMPORTED_MODULE_6__}">`;
-
-        if (todo.done === true) {
-            todoIcon.innerHTML = `<img src="${_check_circle_svg__WEBPACK_IMPORTED_MODULE_3__}">`;
-            todoDiv.classList.add("done");
-        }
-    });
-
-    addTodoButton.classList.add("add-todo-button");
-    mainTodos.appendChild(addTodoButton);
-    addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_2__}">Add Todo`;
-    addTodoButton.style.display = "flex";
-}
-
 function getDynamicEventListeners() {
     const projectButtons = document.querySelectorAll(".project");
     projectButtons.forEach((btn, index) => {
@@ -3440,7 +3344,7 @@ function getDynamicEventListeners() {
             clearActiveProjects();
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
             clearWebsite();
-            renderPage();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
 
@@ -3457,7 +3361,7 @@ function getDynamicEventListeners() {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done = true;
                 console.log("Todo done...");
                 clearWebsite();
-                renderPage();
+                (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             }
         });
     });
@@ -3469,7 +3373,7 @@ function getDynamicEventListeners() {
             console.log("Todo deleted");
             saveLocalStorage();
             clearWebsite();
-            renderPage();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
 
@@ -3496,14 +3400,14 @@ function getDynamicEventListeners() {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate = editDueDateInput.value;
                 console.log("Edit saved...")
                 clearWebsite();
-                renderPage();
+                (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
 
             const cancelEditButton = document.querySelector(".cancel-edit");
             cancelEditButton.addEventListener("click", () => {
                 console.log("Edit canceled...")
                 clearWebsite();
-                renderPage();
+                (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
         });
     });
@@ -3527,7 +3431,7 @@ function getStaticEventListeners() {
             saveLocalStorage();
             clearInputs();
             clearWebsite();
-            renderPage();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
 
@@ -3570,7 +3474,7 @@ function renderAddTodoDiv() {
     addTodoCancelButton.addEventListener("click", () => {
         addTodoButton.style.display = "flex";
         clearWebsite();
-        renderPage();
+        (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
     });
 
     addTodoAddButton.addEventListener("click", () => {
@@ -3584,7 +3488,7 @@ function renderAddTodoDiv() {
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             saveLocalStorage();
             clearWebsite();
-            renderPage();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
 }
@@ -3635,8 +3539,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
 /* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
-/* harmony import */ var _normalize_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./normalize.css */ "./src/normalize.css");
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _render__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./render */ "./src/render.js");
+/* harmony import */ var _normalize_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./normalize.css */ "./src/normalize.css");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+
 
 
 
@@ -3657,8 +3563,133 @@ if (!localStorage.getItem("projects")) {
     console.log("Local storage has been found!");
   }
 
-(0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.renderPage)();
+(0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
+
+
+
+/***/ }),
+
+/***/ "./src/render.js":
+/*!***********************!*\
+  !*** ./src/render.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderPage: () => (/* binding */ renderPage)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
+/* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
+/* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isToday/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/formatDistance/index.js");
+/* harmony import */ var _plus_square_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plus-square.svg */ "./src/plus-square.svg");
+/* harmony import */ var _check_circle_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./check-circle.svg */ "./src/check-circle.svg");
+/* harmony import */ var _circle_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./circle.svg */ "./src/circle.svg");
+/* harmony import */ var _edit_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit.svg */ "./src/edit.svg");
+/* harmony import */ var _trash_2_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./trash-2.svg */ "./src/trash-2.svg");
+
+
+
+
+
+
+
+
+
+
+function renderPage() {
+    renderSidebar();
+    renderMainHeader();
+    renderMain();
+    (0,_domLoader__WEBPACK_IMPORTED_MODULE_2__.getDynamicEventListeners)();
+    console.log("Page rendered...");
+}
+
+const sideMenu = document.querySelector(".side-menu");
+const mainHeader = document.querySelector(".main-header");
+const mainTodos = document.querySelector(".main-todos");
+const addTodoButton = document.createElement("div");
+
+function renderSidebar() {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
+        const projectDiv = document.createElement("div");
+        projectDiv.classList.add("project");
+        if (project.active) projectDiv.classList.add("active");
+        sideMenu.appendChild(projectDiv);
+        projectDiv.innerText = project.name;
+    });
+
+    const addProjectButton = document.createElement("div");
+    addProjectButton.classList.add("add-project-button");
+    sideMenu.appendChild(addProjectButton);
+    addProjectButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Project`;
+}
+
+function renderMainHeader() {
+    const headerTitle = document.createElement("div");
+    mainHeader.appendChild(headerTitle);
+    const headerDescription = document.createElement("div");
+    mainHeader.appendChild(headerDescription);
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
+        if (project.active) {
+            headerTitle.innerText = project.name;
+            headerDescription.innerText = project.description;
+        }
+    });
+}
+
+function renderMain() {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.forEach(todo => {
+        const todoDiv = document.createElement("div");
+        todoDiv.classList.add("todo-container");
+        mainTodos.appendChild(todoDiv);
+
+        const todoIcon = document.createElement("div");
+        todoIcon.classList.add("todo-icon");
+        todoDiv.appendChild(todoIcon);
+        todoIcon.innerHTML = `<img src="${_circle_svg__WEBPACK_IMPORTED_MODULE_5__}">`;
+
+        const todoTitle = document.createElement("div");
+        todoTitle.classList.add("todo-title");
+        todoDiv.appendChild(todoTitle);
+        todoTitle.innerText = todo.title;
+
+        const todoDescription = document.createElement("div");
+        todoDescription.classList.add("todo-description");
+        todoDiv.appendChild(todoDescription);
+        todoDescription.innerText = todo.description;
+
+        const todoDueDate = document.createElement("div");
+        todoDueDate.classList.add("todo-due-date");
+        todoDiv.appendChild(todoDueDate);
+        if ((0,date_fns__WEBPACK_IMPORTED_MODULE_8__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_9__["default"])(todo.dueDate))) todoDueDate.innerText = "today";
+        else todoDueDate.innerText = (0,date_fns__WEBPACK_IMPORTED_MODULE_10__["default"])(new Date((0,date_fns__WEBPACK_IMPORTED_MODULE_9__["default"])(todo.dueDate)), new Date(), { addSuffix: true });
+
+        const todoEdit = document.createElement("div");
+        todoEdit.classList.add("todo-edit");
+        todoDiv.appendChild(todoEdit);
+        todoEdit.innerHTML = `<img src="${_edit_svg__WEBPACK_IMPORTED_MODULE_6__}">`;
+
+        const todoTrash = document.createElement("div");
+        todoTrash.classList.add("todo-trash");
+        todoDiv.appendChild(todoTrash);
+        todoTrash.innerHTML = `<img src="${_trash_2_svg__WEBPACK_IMPORTED_MODULE_7__}">`;
+
+        if (todo.done === true) {
+            todoIcon.innerHTML = `<img src="${_check_circle_svg__WEBPACK_IMPORTED_MODULE_4__}">`;
+            todoDiv.classList.add("done");
+        }
+    });
+
+    addTodoButton.classList.add("add-todo-button");
+    mainTodos.appendChild(addTodoButton);
+    addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
+    addTodoButton.style.display = "flex";
+}
 
 
 
