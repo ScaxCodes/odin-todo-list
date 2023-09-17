@@ -3332,7 +3332,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   addTodoButton: () => (/* binding */ addTodoButton),
 /* harmony export */   getDynamicEventListeners: () => (/* binding */ getDynamicEventListeners),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
-/* harmony export */   renderPage: () => (/* reexport safe */ _render__WEBPACK_IMPORTED_MODULE_2__.renderPage)
+/* harmony export */   mainHeader: () => (/* binding */ mainHeader),
+/* harmony export */   mainTodos: () => (/* binding */ mainTodos),
+/* harmony export */   renderPage: () => (/* reexport safe */ _render__WEBPACK_IMPORTED_MODULE_2__.renderPage),
+/* harmony export */   sideMenu: () => (/* binding */ sideMenu)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
@@ -3345,12 +3348,15 @@ __webpack_require__.r(__webpack_exports__);
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
 const mainTodos = document.querySelector(".main-todos");
+
+const addTodoButton = document.createElement("div");
+
 const popup = document.querySelector(".popup");
 const popupContainer = document.querySelector(".popup-container");
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
-const addTodoButton = document.createElement("div");
+
 
 function getDynamicEventListeners() {
     const projectButtons = document.querySelectorAll(".project");
@@ -3358,7 +3364,7 @@ function getDynamicEventListeners() {
         btn.addEventListener("click", () => {
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.clearActiveProjects)();
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
-            clearWebsite();
+            _clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
@@ -3375,7 +3381,7 @@ function getDynamicEventListeners() {
             if (_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done === false) {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done = true;
                 console.log("Todo done...");
-                clearWebsite();
+                _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             }
         });
@@ -3387,7 +3393,7 @@ function getDynamicEventListeners() {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.splice(index, 1);
             console.log("Todo deleted");
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-            clearWebsite();
+            _clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
@@ -3414,14 +3420,14 @@ function getDynamicEventListeners() {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].description = editDescriptionInput.value;
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate = editDueDateInput.value;
                 console.log("Edit saved...")
-                clearWebsite();
+                _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
 
             const cancelEditButton = document.querySelector(".cancel-edit");
             cancelEditButton.addEventListener("click", () => {
                 console.log("Edit canceled...")
-                clearWebsite();
+                _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
         });
@@ -3444,8 +3450,8 @@ function getStaticEventListeners() {
             popup.style.display = "none";
             popupContainer.style.display = "none";
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-            clearInputs();
-            clearWebsite();
+            _clearInputs();
+            _clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
@@ -3488,7 +3494,7 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         addTodoButton.style.display = "flex";
-        clearWebsite();
+        _clearWebsite();
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
     });
 
@@ -3502,19 +3508,19 @@ function renderAddTodoDiv() {
             addTodoDiv.style.display = "none";
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-            clearWebsite();
+            _clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
 }
 
-function clearInputs() {
+function _clearInputs() {
     titleInput.value = "";
     descriptionInput.value = "";
 }
 
 // TODO: Make sideMenu logic same as mainHeader (clear sideHeader instead of whole sideMenu)
-function clearWebsite() {
+function _clearWebsite() {
     sideMenu.innerHTML = `
         <div class="side-header">
             <h2>Projects</h2>
@@ -3607,37 +3613,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function renderPage() {
-    renderSidebar();
-    renderMainHeader();
-    renderMain();
+    _renderSidebar();
+    _renderMainHeader();
+    _renderMain();
     (0,_domLoader__WEBPACK_IMPORTED_MODULE_2__.getDynamicEventListeners)();
     console.log("Page rendered...");
 }
 
-const sideMenu = document.querySelector(".side-menu");
-const mainHeader = document.querySelector(".main-header");
-const mainTodos = document.querySelector(".main-todos");
-
-function renderSidebar() {
+function _renderSidebar() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         const projectDiv = document.createElement("div");
         projectDiv.classList.add("project");
         if (project.active) projectDiv.classList.add("active");
-        sideMenu.appendChild(projectDiv);
+        _domLoader__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(projectDiv);
         projectDiv.innerText = project.name;
     });
 
     const addProjectButton = document.createElement("div");
     addProjectButton.classList.add("add-project-button");
-    sideMenu.appendChild(addProjectButton);
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(addProjectButton);
     addProjectButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Project`;
 }
 
-function renderMainHeader() {
+function _renderMainHeader() {
     const headerTitle = document.createElement("div");
-    mainHeader.appendChild(headerTitle);
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerTitle);
     const headerDescription = document.createElement("div");
-    mainHeader.appendChild(headerDescription);
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerDescription);
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         if (project.active) {
             headerTitle.innerText = project.name;
@@ -3646,11 +3648,11 @@ function renderMainHeader() {
     });
 }
 
-function renderMain() {
+function _renderMain() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo-container");
-        mainTodos.appendChild(todoDiv);
+        _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(todoDiv);
 
         const todoIcon = document.createElement("div");
         todoIcon.classList.add("todo-icon");
@@ -3690,7 +3692,7 @@ function renderMain() {
     });
 
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.classList.add("add-todo-button");
-    mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton);
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton);
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.style.display = "flex";
 }

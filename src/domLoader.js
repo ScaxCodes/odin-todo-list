@@ -6,12 +6,15 @@ import { renderPage } from "./render";
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
 const mainTodos = document.querySelector(".main-todos");
+
+const addTodoButton = document.createElement("div");
+
 const popup = document.querySelector(".popup");
 const popupContainer = document.querySelector(".popup-container");
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
-const addTodoButton = document.createElement("div");
+
 
 function getDynamicEventListeners() {
     const projectButtons = document.querySelectorAll(".project");
@@ -19,7 +22,7 @@ function getDynamicEventListeners() {
         btn.addEventListener("click", () => {
             clearActiveProjects();
             projects[index].active = true;
-            clearWebsite();
+            _clearWebsite();
             renderPage();
         });
     });
@@ -36,7 +39,7 @@ function getDynamicEventListeners() {
             if (projects[getActiveProject()].todos[index].done === false) {
                 projects[getActiveProject()].todos[index].done = true;
                 console.log("Todo done...");
-                clearWebsite();
+                _clearWebsite();
                 renderPage();
             }
         });
@@ -48,7 +51,7 @@ function getDynamicEventListeners() {
             projects[getActiveProject()].todos.splice(index, 1);
             console.log("Todo deleted");
             saveLocalStorage();
-            clearWebsite();
+            _clearWebsite();
             renderPage();
         });
     });
@@ -75,14 +78,14 @@ function getDynamicEventListeners() {
                 projects[getActiveProject()].todos[index].description = editDescriptionInput.value;
                 projects[getActiveProject()].todos[index].dueDate = editDueDateInput.value;
                 console.log("Edit saved...")
-                clearWebsite();
+                _clearWebsite();
                 renderPage();
             });
 
             const cancelEditButton = document.querySelector(".cancel-edit");
             cancelEditButton.addEventListener("click", () => {
                 console.log("Edit canceled...")
-                clearWebsite();
+                _clearWebsite();
                 renderPage();
             });
         });
@@ -105,8 +108,8 @@ function getStaticEventListeners() {
             popup.style.display = "none";
             popupContainer.style.display = "none";
             saveLocalStorage();
-            clearInputs();
-            clearWebsite();
+            _clearInputs();
+            _clearWebsite();
             renderPage();
         }
     });
@@ -149,7 +152,7 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         addTodoButton.style.display = "flex";
-        clearWebsite();
+        _clearWebsite();
         renderPage();
     });
 
@@ -163,19 +166,19 @@ function renderAddTodoDiv() {
             addTodoDiv.style.display = "none";
             addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             saveLocalStorage();
-            clearWebsite();
+            _clearWebsite();
             renderPage();
         }
     });
 }
 
-function clearInputs() {
+function _clearInputs() {
     titleInput.value = "";
     descriptionInput.value = "";
 }
 
 // TODO: Make sideMenu logic same as mainHeader (clear sideHeader instead of whole sideMenu)
-function clearWebsite() {
+function _clearWebsite() {
     sideMenu.innerHTML = `
         <div class="side-header">
             <h2>Projects</h2>
@@ -188,4 +191,4 @@ function clearWebsite() {
 console.log("domLoader.js has been executed");
 
 export { renderPage, getStaticEventListeners, getDynamicEventListeners, addTodo };
-export { addTodoButton };
+export { addTodoButton, sideMenu, mainHeader, mainTodos };

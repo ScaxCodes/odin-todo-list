@@ -1,7 +1,7 @@
 import { projects } from "./index";
 import { getActiveProject } from "./appLogic";
 import { getDynamicEventListeners } from "./domLoader";
-import { addTodoButton } from "./domLoader";
+import { addTodoButton, sideMenu, mainHeader, mainTodos } from "./domLoader";
 import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
 import iconCheckCircle from './check-circle.svg';
@@ -10,18 +10,14 @@ import iconEdit from './edit.svg';
 import iconTrash from './trash-2.svg';
 
 function renderPage() {
-    renderSidebar();
-    renderMainHeader();
-    renderMain();
+    _renderSidebar();
+    _renderMainHeader();
+    _renderMain();
     getDynamicEventListeners();
     console.log("Page rendered...");
 }
 
-const sideMenu = document.querySelector(".side-menu");
-const mainHeader = document.querySelector(".main-header");
-const mainTodos = document.querySelector(".main-todos");
-
-function renderSidebar() {
+function _renderSidebar() {
     projects.forEach(project => {
         const projectDiv = document.createElement("div");
         projectDiv.classList.add("project");
@@ -36,7 +32,7 @@ function renderSidebar() {
     addProjectButton.innerHTML = `<img src="${iconPlusSquare}">Add Project`;
 }
 
-function renderMainHeader() {
+function _renderMainHeader() {
     const headerTitle = document.createElement("div");
     mainHeader.appendChild(headerTitle);
     const headerDescription = document.createElement("div");
@@ -49,7 +45,7 @@ function renderMainHeader() {
     });
 }
 
-function renderMain() {
+function _renderMain() {
     projects[getActiveProject()].todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo-container");
