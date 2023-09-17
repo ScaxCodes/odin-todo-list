@@ -12,11 +12,6 @@ const descriptionInput = document.querySelector("#project-description");
 
 const addTodoButton = document.createElement("div");
 
-// function addListeners() {
-//     addProjectButton.addEventListener("click", addProject);
-//     console.log("Event listeners added...");
-// }
-
 function renderPage() {
     renderSidebar();
     renderMainHeader();
@@ -144,6 +139,7 @@ function getDynamicEventListeners() {
         btn.addEventListener("click", () => {
             projects[getActiveProject()].todos.splice(index, 1);
             console.log("Todo deleted");
+            saveLocalStorage();
             clearWebsite();
             renderPage();
         });
@@ -200,6 +196,7 @@ function getStaticEventListeners() {
             projects.push(projectFactory(titleInput.value, descriptionInput.value));
             popup.style.display = "none";
             popupContainer.style.display = "none";
+            saveLocalStorage();
             clearInputs();
             clearWebsite();
             renderPage();
@@ -244,7 +241,6 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         addTodoButton.style.display = "flex";
-        // addTodoDiv.style.display = "none";
         clearWebsite();
         renderPage();
     });
@@ -258,6 +254,7 @@ function renderAddTodoDiv() {
             addTodoButton.style.display = "block";
             addTodoDiv.style.display = "none";
             addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
+            saveLocalStorage();
             clearWebsite();
             renderPage();
         }
@@ -288,6 +285,12 @@ function clearWebsite() {
 
 function addTodo(name, description, dueDate) {
     projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
+}
+
+function saveLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+
+    console.log("Saved projects/todos to local storage...");
 }
 
 console.log("domLoader.js has been executed");
