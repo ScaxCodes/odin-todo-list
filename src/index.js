@@ -1,38 +1,25 @@
-import { todoFactory, deleteTodo, changePriority, projects } from "./appLogic";
-import { initPage, displayTodo, allFieldsFilled } from "./domLoader";
+import { todoFactory, projectFactory } from "./appLogic";
+import { renderPage, getStaticEventListeners } from "./domLoader";
 
-let addProjectButton = document.querySelector(".sidebar button");
-let addTodoButton = document.querySelector(".todo-box button");
-let sidebar = document.querySelector(".sidebar");
-let sidebarList = document.querySelector(".sidebar ul")
-let todoList = document.querySelector(".todo-list ul");
+let projects = [];
 
-let projectField = document.querySelector("#project");
-let titleField = document.querySelector("#title");
-let descriptionField = document.querySelector("#description");
-let dueDateField = document.querySelector("#due-date");
-let priorityField = document.querySelector("#priority");
 
-addTodoButton.addEventListener("click", () => {
-    // if (allFieldsFilled()) {
-        createTodo();
-        displayTodo();
-    // }
-    // else alert("Please fill all fields to add a todo!");
-});
+if (!localStorage.getItem("projects")) {
+    // Create default project
+    console.log("Storage 404");
 
-function createTodo() {
-    projects[0].todos.push(
-        todoFactory(
-            titleField.value,
-            descriptionField.value,
-            dueDateField.value,
-            priorityField.value
-        )
-    );
-    console.log(projects[0]);
-}
+    projects.push(projectFactory("Default Project", "Well, this is just a template"));
+    projects[0].active = true;
+    projects[0].todos.push(todoFactory("Default Todo", "Enter some description here", "2023-09-15", null));
+  } else {
+    // Load projects/todos from local storage
+    projects = JSON.parse(localStorage.getItem("projects"));
+    console.log("Storage has been found");
+  }
 
-initPage();
+renderPage();
+getStaticEventListeners();
 
 console.log(projects);
+
+export { projects };

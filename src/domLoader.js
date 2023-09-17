@@ -1,98 +1,298 @@
-import { projects } from "./appLogic";
+import { projects } from "./index";
+import { todoFactory, projectFactory } from "./appLogic";
+import { format, formatDistance, formatRelative, subDays, isToday, parseISO } from 'date-fns'
 
-let addProjectButton = document.querySelector(".sidebar button");
-// let addTodoButton = document.querySelector(".todo-box button");
-let sidebar = document.querySelector(".sidebar");
-let sidebarList = document.querySelector(".sidebar ul")
-let todoList = document.querySelector(".todo-list ul");
+const sideMenu = document.querySelector(".side-menu");
+const mainHeader = document.querySelector(".main-header");
+const mainTodos = document.querySelector(".main-todos");
+const popup = document.querySelector(".popup");
+const popupContainer = document.querySelector(".popup-container");
+const titleInput = document.querySelector("#project-title");
+const descriptionInput = document.querySelector("#project-description");
 
-let projectField = document.querySelector("#project");
-let titleField = document.querySelector("#title");
-let descriptionField = document.querySelector("#description");
-let dueDateField = document.querySelector("#due-date");
-let priorityField = document.querySelector("#priority");
+const addTodoButton = document.createElement("div");
 
-// function selectElementsAgain() {
-//     addProjectButton = document.querySelector(".sidebar button");
-//     addTodoButton = document.querySelector(".todo-box button");
-//     sidebar = document.querySelector(".sidebar");
-//     todoList = document.querySelector(".todo-list");
-//     console.log("Elements again selected...");
-// }
-
-function addListeners() {
-    addProjectButton.addEventListener("click", addProject);
-    // addTodoButton.addEventListener("click", addTodo);
-    console.log("Event listeners added...");
+function renderPage() {
+    renderSidebar();
+    renderMainHeader();
+    renderMain();
+    getDynamicEventListeners();
+    console.log("Page rendered...");
 }
 
-function initPage() {
-    // selectElementsAgain();
-    addListeners();
-    renderDropdownMenu();
-    console.log("Page initialized...");
+function renderSidebar() {
+    projects.forEach(project => {
+        const projectDiv = document.createElement("div");
+        projectDiv.classList.add("project");
+        if (project.active) projectDiv.classList.add("active");
+        sideMenu.appendChild(projectDiv);
+        projectDiv.innerText = project.name;
+    });
+
+    const addProjectButton = document.createElement("div");
+    addProjectButton.classList.add("add-project-button");
+    sideMenu.appendChild(addProjectButton);
+    addProjectButton.innerHTML = `<img src="plus-square.svg">Add Project`;
 }
 
-function addProject() {
-    const newProject = document.createElement("li");
-    sidebarList.appendChild(newProject);
-    newProject.textContent = prompt("Enter project name");
-    projects.push({ name: newProject.textContent, todos: [], });
-    renderDropdownMenu();
-    console.log("Project added...");
-}
-
-function displayTodo() {
-    const newTodo = document.createElement("li");
-    todoList.appendChild(newTodo);
-    newTodo.textContent = projects[0].todos[getTodoLength() - 1].title + ", due Date: " + projects[0].todos[getTodoLength() - 1].dueDate;
-    addDeleteButton(newTodo);
-    todoAddListener(newTodo);
-    clearForm();
-}
-
-function todoAddListener(newTodo) {
-    newTodo.addEventListener("click", () => {
-        newTodo.innerHTML += "Helloooooo";
+function renderMainHeader() {
+    const headerTitle = document.createElement("div");
+    mainHeader.appendChild(headerTitle);
+    const headerDescription = document.createElement("div");
+    mainHeader.appendChild(headerDescription);
+    projects.forEach(project => {
+        if (project.active) {
+            headerTitle.innerText = project.name;
+            headerDescription.innerText = project.description;
+        }
     });
 }
 
-function addDeleteButton(newTodo) {
-    newTodo.innerHTML += " " + `<button class="delete">x</button>`;
+function renderMain() {
+    projects[getActiveProject()].todos.forEach(todo => {
+        const todoDiv = document.createElement("div");
+        todoDiv.classList.add("todo-container");
+        mainTodos.appendChild(todoDiv);
+
+        const todoIcon = document.createElement("div");
+        todoIcon.classList.add("todo-icon");
+        todoDiv.appendChild(todoIcon);
+        todoIcon.innerHTML = `<img src="circle.svg">`;
+
+        const todoTitle = document.createElement("div");
+        todoTitle.classList.add("todo-title");
+        todoDiv.appendChild(todoTitle);
+        todoTitle.innerText = todo.title;
+
+        const todoDescription = document.createElement("div");
+        todoDescription.classList.add("todo-description");
+        todoDiv.appendChild(todoDescription);
+        todoDescription.innerText = todo.description;
+
+        const todoDueDate = document.createElement("div");
+        todoDueDate.classList.add("todo-due-date");
+        todoDiv.appendChild(todoDueDate);
+        if (isToday(parseISO(todo.dueDate))) todoDueDate.innerText = "today";
+        else todoDueDate.innerText = formatDistance(new Date(parseISO(todo.dueDate)), new Date(), { addSuffix: true });
+
+        const todoEdit = document.createElement("div");
+        todoEdit.classList.add("todo-edit");
+        todoDiv.appendChild(todoEdit);
+        todoEdit.innerHTML = `<img src="edit.svg">`;
+
+        const todoTrash = document.createElement("div");
+        todoTrash.classList.add("todo-trash");
+        todoDiv.appendChild(todoTrash);
+        todoTrash.innerHTML = `<img src="trash-2.svg">`;
+
+        if (todo.done === true) {
+            todoIcon.innerHTML = `<img src="check-circle.svg">`;
+            todoDiv.classList.add("done");
+        }
+    });
+
+    addTodoButton.classList.add("add-todo-button");
+    mainTodos.appendChild(addTodoButton);
+    addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
+    addTodoButton.style.display = "flex";
 }
 
-function getTodoLength() {
-    return projects[0].todos.length;
+function getActiveProject() {
+    let index = 0;
+    projects.forEach((project, i) => {
+        if (project.active) index = i;
+    });
+    return index;
 }
 
-function allFieldsFilled() {
-    if (titleField.value && descriptionField.value && dueDateField.value && priorityField.value) return true;
-    else false;
+function getDynamicEventListeners() {
+    const projectButtons = document.querySelectorAll(".project");
+    projectButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            clearActiveProjects();
+            projects[index].active = true;
+            clearWebsite();
+            renderPage();
+        });
+    });
+
+    const addProjectButton = document.querySelector(".add-project-button");
+    addProjectButton.addEventListener("click", () => {
+        popup.style.display = "flex";
+        popupContainer.style.display = "flex";
+    });
+
+    const todoButtons = document.querySelectorAll(".todo-icon");
+    todoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            if (projects[getActiveProject()].todos[index].done === false) {
+                projects[getActiveProject()].todos[index].done = true;
+                console.log("Todo done...");
+                clearWebsite();
+                renderPage();
+            }
+        });
+    });
+
+    const deleteTodoButtons = document.querySelectorAll(".todo-trash");
+    deleteTodoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            projects[getActiveProject()].todos.splice(index, 1);
+            console.log("Todo deleted");
+            saveLocalStorage();
+            clearWebsite();
+            renderPage();
+        });
+    });
+
+
+    const editTodoButtons = document.querySelectorAll(".todo-edit");
+    editTodoButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
+            editTodoDiv.innerHTML = `
+            <input type="text" id="edit-todo-title" value="${projects[getActiveProject()].todos[index].title}">
+            <input type="text" id="edit-todo-description" placeholder="Enter description" value="${projects[getActiveProject()].todos[index].description}">
+            <input type="date" id="edit-due-date" name="due-date" value="${projects[getActiveProject()].todos[index].dueDate}">
+            <div class="save-edit edit-button">Save</div>
+            <div class="cancel-edit edit-button">Cancel</div>
+            `;
+            const editTitleInput = document.querySelector("#edit-todo-title");
+            const editDescriptionInput = document.querySelector("#edit-todo-description");
+            const editDueDateInput = document.querySelector("#edit-due-date");
+
+            const saveEditButton = document.querySelector(".save-edit");
+            saveEditButton.addEventListener("click", () => {
+                projects[getActiveProject()].todos[index].title = editTitleInput.value;
+                projects[getActiveProject()].todos[index].description = editDescriptionInput.value;
+                projects[getActiveProject()].todos[index].dueDate = editDueDateInput.value;
+                console.log("Edit saved...")
+                clearWebsite();
+                renderPage();
+            });
+
+            const cancelEditButton = document.querySelector(".cancel-edit");
+            cancelEditButton.addEventListener("click", () => {
+                console.log("Edit canceled...")
+                clearWebsite();
+                renderPage();
+            });
+        });
+    });
+
 }
 
-function getInputs() {
-    return { projectField, titleField, descriptionField, dueDateField, priorityField };
+function getStaticEventListeners() {
+    const cancelPopupButton = document.querySelector(".cancel-button");
+    cancelPopupButton.addEventListener("click", () => {
+        popup.style.display = "none";
+        popupContainer.style.display = "none";     
+    });
+
+    const popupAddProjectButton = document.querySelector(".add-button");
+    popupAddProjectButton.addEventListener("click", () => {
+        if (!titleInput.value) alert("Please enter a title");
+        else {
+            projects.push(projectFactory(titleInput.value, descriptionInput.value));
+            popup.style.display = "none";
+            popupContainer.style.display = "none";
+            saveLocalStorage();
+            clearInputs();
+            clearWebsite();
+            renderPage();
+        }
+    });
+
+    const addTodoButton = document.querySelector(".add-todo-button");
+    addTodoButton.addEventListener("click", () => {
+        addTodoButton.style.display = "none";
+        renderAddTodoDiv();
+    });
 }
 
-function clearForm() {
-    titleField.value = "";
-    descriptionField.value = "";
-    dueDateField.value = "";
-    priorityField.value = "";
-    console.log("Fields cleared...")
+// Plus event listener, bad design?
+// addTodoButton global, as its needed in various functions, bad design?
+function renderAddTodoDiv() {
+    const addTodoDiv = document.createElement("div");
+    addTodoDiv.classList.add("add-todo-container");
+    mainTodos.appendChild(addTodoDiv);
+    
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    const addTodoInputs = document.createElement("div");
+    addTodoInputs.classList.add("add-todo-inputs");
+    addTodoDiv.appendChild(addTodoInputs)
+    addTodoInputs.innerHTML = `
+    <input type="text" id="todo-title" placeholder="Enter todo name">
+    <input type="text" id="todo-description" placeholder="Enter description">
+    <input type="date" id="due-date" name="due-date" value="${todayDate}">
+    `
+
+    const addTodoAddButton = document.createElement("div");
+    addTodoAddButton.classList.add("add-todo-add-button");
+    addTodoDiv.appendChild(addTodoAddButton);
+    addTodoAddButton.innerText = "Add Todo";
+
+    const addTodoCancelButton = document.createElement("div");
+    addTodoCancelButton.classList.add("add-todo-cancel-button");
+    addTodoDiv.appendChild(addTodoCancelButton);
+    addTodoCancelButton.innerText = "Cancel";
+
+    // See comment above
+    addTodoCancelButton.addEventListener("click", () => {
+        addTodoButton.style.display = "flex";
+        clearWebsite();
+        renderPage();
+    });
+
+    addTodoAddButton.addEventListener("click", () => {
+        const todoTitleInput = document.querySelector("#todo-title");
+        const todoDescriptionInput = document.querySelector("#todo-description");
+        const todoDueDate = document.querySelector("#due-date");
+        if (todoTitleInput.value === "") alert("Please enter a title!");
+        else {
+            addTodoButton.style.display = "block";
+            addTodoDiv.style.display = "none";
+            addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
+            saveLocalStorage();
+            clearWebsite();
+            renderPage();
+        }
+    });
 }
 
-function renderDropdownMenu() {
-    const selectElement = document.querySelector("select");
-    let options = "";
+function clearActiveProjects() {
+    projects.forEach(project => {
+        project.active = false;
+    });
+}
 
-    for (let i = 0; i < projects.length; i++) {
-        options += `<option value="${projects[i].name}">${projects[i].name}</option>`
-    }
+function clearInputs() {
+    titleInput.value = "";
+    descriptionInput.value = "";
+}
 
-    selectElement.innerHTML = options;
+// TODO: Make sideMenu logic same as mainHeader (clear sideHeader instead of whole sideMenu)
+function clearWebsite() {
+    sideMenu.innerHTML = `
+        <div class="side-header">
+            <h2>Projects</h2>
+        </div>
+    `;
+    mainHeader.innerHTML = "";
+    mainTodos.innerHTML = "";
+}
+
+function addTodo(name, description, dueDate) {
+    projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
+}
+
+function saveLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+
+    console.log("Saved projects/todos to local storage...");
 }
 
 console.log("domLoader.js has been executed");
 
-export { initPage, getInputs, displayTodo, allFieldsFilled };
+export { renderPage, getStaticEventListeners };

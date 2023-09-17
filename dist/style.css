@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 		font-size: 1.2rem;
 		line-height: 1.5;
 		/* https://css-tricks.com/snippets/css/system-font-stack/ below: */
@@ -12,15 +12,256 @@ body {
   height: 100vh;
 }
 
-.sidebar {
+.side-menu {
   background-color: pink;
+  padding: 20px;
 }
 
-.content {
+.project {
+  background-color: rgb(250, 164, 179);
+  margin: 10px;
+  padding: 10px;
+}
+
+.project:hover {
+  background-color: rgb(181, 134, 142);
+}
+
+.project.active {
+  border: 3px solid rgb(255, 107, 132);
+  padding: 7px;
+}
+
+.add-project-button {
+  background-color: rgb(255, 107, 132);
+  margin: 10px 10px 10px auto;
+  padding: 5px 10px;
+  width: 150px;
+  font-size: 1rem;
+  display: flex;
+  gap: 10px;
+  border-radius: 5px;
+}
+
+.add-project-button:hover {
+  background-color: rgb(207, 86, 106);
+}
+
+.add-todo-button {
+  background-color: rgb(215, 133, 0);
+  margin: 10px 30px;
+  padding: 5px 10px;
+  width: 150px;
+  font-size: 1rem;
+  display: flex;
+  gap: 10px;
+  border-radius: 5px;
+}
+
+.add-todo-button:hover {
+  background-color: rgb(179, 110, 0);
+}
+
+.main {
   background-color: sandybrown;
 }
 
-.todo-box {
-  background-color: rgb(248, 144, 53);
-  width: 500px;
+.main-header div:nth-child(1) {
+  padding: 20px 20px 0px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.main-header div:nth-child(2) {
+  padding: 0px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.popup {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 350px;
+  background-color: rgb(162, 162, 162);
+  border-radius: 5px;
+}
+
+.popup-container {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-container-button-container {
+  display: flex;
+  gap: 100px;
+}
+
+.add-button, .cancel-button {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 30px;
+  width: 100px;
+  text-align: center;
+}
+
+.edit-button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.edit-button:hover {
+  cursor: pointer;
+}
+
+.add-button, .save-edit {
+  background-color: rgb(90, 177, 90);
+}
+
+.cancel-button, .cancel-edit {
+  background-color: rgb(209, 101, 101);
+}
+
+.add-button:hover, .cancel-button:hover {
+  transform: scale(1.1);
+}
+
+.todo-container {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(241, 116, 7);
+  gap: 10px;
+}
+
+.todo-container.done {
+  background-color: rgb(173, 86, 9);
+  text-decoration: line-through;
+}
+
+.todo-icon:hover {
+  cursor: pointer;
+}
+
+.todo-trash:hover {
+  cursor: pointer;
+}
+
+.todo-edit:hover {
+  cursor: pointer;
+}
+
+.add-todo-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(241, 116, 7);
+}
+
+.todo-icon {
+  display: flex; 
+  align-items: center;
+}
+
+.todo-icon img {
+  height: 16px;
+}
+
+.todo-trash {
+  display: flex; 
+  align-items: center;
+}
+
+.todo-trash img {
+  height: 20px;
+}
+
+.todo-edit {
+  display: flex; 
+  align-items: center;
+}
+
+.todo-edit img {
+  height: 20px;
+}
+
+.todo-title {
+  font-size: 80%;
+  font-weight: 500;
+  margin: 0 10px 0 0;
+}
+
+.todo-description {
+  font-size: 80%;
+}
+
+.todo-due-date {
+  font-size: 80%;
+  font-style: italic;
+  margin: 0 0 0 auto;
+}
+
+div.popup input {
+  margin: 0 0 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 80%;
+}
+
+div.add-todo-container input {
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 80%;
+  font-size: 80%;
+}
+
+div.todo-container input {
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 80%;
+  font-size: 80%;
+}
+
+div.add-todo-container input:nth-child(1),
+div.add-todo-container input:nth-child(2) {
+  margin: 0 0 10px 0;
+}
+
+.add-todo-add-button, .add-todo-cancel-button {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+}
+
+.add-todo-add-button {
+  background-color: rgb(90, 177, 90);
+}
+
+.add-todo-cancel-button {
+  background-color: rgb(209, 101, 101);
+}
+
+.add-todo-add-button:hover, .add-todo-cancel-button:hover {
+  transform: scale(1.1);
 }
