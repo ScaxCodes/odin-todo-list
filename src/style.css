@@ -68,6 +68,7 @@ body {
 
 .add-todo-button:hover {
   background-color: #738e7199;
+  cursor: pointer;
 }
 
 .main {
@@ -145,6 +146,7 @@ body {
 
 .add-button:hover, .cancel-button:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
 
 .todo-container {
@@ -272,4 +274,5 @@ div.add-todo-container input:nth-child(2) {
 
 .add-todo-add-button:hover, .add-todo-cancel-button:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }

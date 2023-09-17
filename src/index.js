@@ -1,5 +1,7 @@
 import { todoFactory, projectFactory } from "./appLogic";
 import { renderPage, getStaticEventListeners } from "./domLoader";
+import "./normalize.css";
+import "./style.css";
 
 let projects = [];
 
