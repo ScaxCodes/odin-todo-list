@@ -2107,7 +2107,6 @@ function todoFactory(title, description, dueDate, priority) {
 function projectFactory(name, description) {
     console.log("Project added...");
     return { name, description, active: false, todos: [] };
-    // return { name, description, todos: [], };
 }
 
 console.log("appLogic.js has been executed");
@@ -2145,11 +2144,6 @@ const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
 const addTodoButton = document.createElement("div");
-
-// function addListeners() {
-//     addProjectButton.addEventListener("click", addProject);
-//     console.log("Event listeners added...");
-// }
 
 function renderPage() {
     renderSidebar();
@@ -2278,6 +2272,7 @@ function getDynamicEventListeners() {
         btn.addEventListener("click", () => {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.splice(index, 1);
             console.log("Todo deleted");
+            saveLocalStorage();
             clearWebsite();
             renderPage();
         });
@@ -2334,6 +2329,7 @@ function getStaticEventListeners() {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.projectFactory)(titleInput.value, descriptionInput.value));
             popup.style.display = "none";
             popupContainer.style.display = "none";
+            saveLocalStorage();
             clearInputs();
             clearWebsite();
             renderPage();
@@ -2378,7 +2374,6 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         addTodoButton.style.display = "flex";
-        // addTodoDiv.style.display = "none";
         clearWebsite();
         renderPage();
     });
@@ -2392,6 +2387,7 @@ function renderAddTodoDiv() {
             addTodoButton.style.display = "block";
             addTodoDiv.style.display = "none";
             addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
+            saveLocalStorage();
             clearWebsite();
             renderPage();
         }
@@ -2424,6 +2420,12 @@ function addTodo(name, description, dueDate) {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.todoFactory)(name, description, dueDate, null));
 }
 
+function saveLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(_index__WEBPACK_IMPORTED_MODULE_0__.projects));
+
+    console.log("Saved projects/todos to local storage...");
+}
+
 console.log("domLoader.js has been executed");
 
 
@@ -2445,12 +2447,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// Create default project
-const projects = [];
+let projects = [];
 
-projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Default Project", "Well, this is just a template"));
-projects[0].active = true;
-projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "2023-09-15", null));
+
+if (!localStorage.getItem("projects")) {
+    // Create default project
+    console.log("Storage 404");
+
+    projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.projectFactory)("Default Project", "Well, this is just a template"));
+    projects[0].active = true;
+    projects[0].todos.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.todoFactory)("Default Todo", "Enter some description here", "2023-09-15", null));
+  } else {
+    // Load projects/todos from local storage
+    projects = JSON.parse(localStorage.getItem("projects"));
+    console.log("Storage has been found");
+  }
 
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.renderPage)();
 (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
