@@ -10,6 +10,22 @@ function projectFactory(name, description) {
     return { name, description, active: false, todos: [] };
 }
 
+function addProject(name, description) {
+    projects.push(projectFactory(name, description));
+}
+
+function addTodo(name, description, dueDate) {
+    projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
+}
+
+function getActiveProject() {
+    let index = 0;
+    projects.forEach((project, i) => {
+        if (project.active) index = i;
+    });
+    return index;
+}
+
 console.log("appLogic.js has been executed");
 
-export { todoFactory, projectFactory };
+export { todoFactory, projectFactory, addProject, addTodo, getActiveProject };

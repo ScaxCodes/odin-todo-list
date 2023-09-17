@@ -1,6 +1,6 @@
 import { projects } from './index';
-import { todoFactory, projectFactory } from "./appLogic";
-import { format, formatDistance, formatRelative, subDays, isToday, parseISO } from 'date-fns'
+import { projectFactory, addTodo, getActiveProject } from "./appLogic";
+import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
 import iconCheckCircle from './check-circle.svg';
 import iconCircle from './circle.svg';
@@ -101,14 +101,6 @@ function renderMain() {
     mainTodos.appendChild(addTodoButton);
     addTodoButton.innerHTML = `<img src="${iconPlusSquare}">Add Todo`;
     addTodoButton.style.display = "flex";
-}
-
-function getActiveProject() {
-    let index = 0;
-    projects.forEach((project, i) => {
-        if (project.active) index = i;
-    });
-    return index;
 }
 
 function getDynamicEventListeners() {
@@ -289,10 +281,6 @@ function clearWebsite() {
     mainTodos.innerHTML = "";
 }
 
-function addTodo(name, description, dueDate) {
-    projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
-}
-
 function saveLocalStorage() {
     localStorage.setItem('projects', JSON.stringify(projects));
 
@@ -301,4 +289,4 @@ function saveLocalStorage() {
 
 console.log("domLoader.js has been executed");
 
-export { renderPage, getStaticEventListeners };
+export { renderPage, getStaticEventListeners, addTodo };

@@ -1,27 +1,24 @@
-import { todoFactory, projectFactory } from "./appLogic";
-import { renderPage, getStaticEventListeners } from "./domLoader";
+import { addProject } from "./appLogic";
+import { renderPage, getStaticEventListeners, addTodo } from "./domLoader";
 import "./normalize.css";
 import "./style.css";
 
 let projects = [];
 
-
 if (!localStorage.getItem("projects")) {
     // Create default project
-    console.log("Storage 404");
+    console.log("Local storage not found!");
 
-    projects.push(projectFactory("Default Project", "Well, this is just a template"));
+    addProject("Default Project", "Well, this is just a template");
     projects[0].active = true;
-    projects[0].todos.push(todoFactory("Default Todo", "Enter some description here", "2023-09-15", null));
+    addTodo("Default Todo", "Enter some description here", "2023-09-15");
   } else {
     // Load projects/todos from local storage
     projects = JSON.parse(localStorage.getItem("projects"));
-    console.log("Storage has been found");
+    console.log("Local storage has been found!");
   }
 
 renderPage();
 getStaticEventListeners();
-
-console.log(projects);
 
 export { projects };
