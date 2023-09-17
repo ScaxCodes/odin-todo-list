@@ -3300,9 +3300,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isToday/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/formatDistance/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isToday/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/formatDistance/index.js");
+/* harmony import */ var _plus_square_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plus-square.svg */ "./src/plus-square.svg");
+/* harmony import */ var _check_circle_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./check-circle.svg */ "./src/check-circle.svg");
+/* harmony import */ var _circle_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./circle.svg */ "./src/circle.svg");
+/* harmony import */ var _edit_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit.svg */ "./src/edit.svg");
+/* harmony import */ var _trash_2_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./trash-2.svg */ "./src/trash-2.svg");
+
+
+
+
+
+
 
 
 
@@ -3337,7 +3348,7 @@ function renderSidebar() {
     const addProjectButton = document.createElement("div");
     addProjectButton.classList.add("add-project-button");
     sideMenu.appendChild(addProjectButton);
-    addProjectButton.innerHTML = `<img src="plus-square.svg">Add Project`;
+    addProjectButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_2__}">Add Project`;
 }
 
 function renderMainHeader() {
@@ -3362,7 +3373,7 @@ function renderMain() {
         const todoIcon = document.createElement("div");
         todoIcon.classList.add("todo-icon");
         todoDiv.appendChild(todoIcon);
-        todoIcon.innerHTML = `<img src="circle.svg">`;
+        todoIcon.innerHTML = `<img src="${_circle_svg__WEBPACK_IMPORTED_MODULE_4__}">`;
 
         const todoTitle = document.createElement("div");
         todoTitle.classList.add("todo-title");
@@ -3377,28 +3388,28 @@ function renderMain() {
         const todoDueDate = document.createElement("div");
         todoDueDate.classList.add("todo-due-date");
         todoDiv.appendChild(todoDueDate);
-        if ((0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(todo.dueDate))) todoDueDate.innerText = "today";
-        else todoDueDate.innerText = (0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(new Date((0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(todo.dueDate)), new Date(), { addSuffix: true });
+        if ((0,date_fns__WEBPACK_IMPORTED_MODULE_7__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_8__["default"])(todo.dueDate))) todoDueDate.innerText = "today";
+        else todoDueDate.innerText = (0,date_fns__WEBPACK_IMPORTED_MODULE_9__["default"])(new Date((0,date_fns__WEBPACK_IMPORTED_MODULE_8__["default"])(todo.dueDate)), new Date(), { addSuffix: true });
 
         const todoEdit = document.createElement("div");
         todoEdit.classList.add("todo-edit");
         todoDiv.appendChild(todoEdit);
-        todoEdit.innerHTML = `<img src="edit.svg">`;
+        todoEdit.innerHTML = `<img src="${_edit_svg__WEBPACK_IMPORTED_MODULE_5__}">`;
 
         const todoTrash = document.createElement("div");
         todoTrash.classList.add("todo-trash");
         todoDiv.appendChild(todoTrash);
-        todoTrash.innerHTML = `<img src="trash-2.svg">`;
+        todoTrash.innerHTML = `<img src="${_trash_2_svg__WEBPACK_IMPORTED_MODULE_6__}">`;
 
         if (todo.done === true) {
-            todoIcon.innerHTML = `<img src="check-circle.svg">`;
+            todoIcon.innerHTML = `<img src="${_check_circle_svg__WEBPACK_IMPORTED_MODULE_3__}">`;
             todoDiv.classList.add("done");
         }
     });
 
     addTodoButton.classList.add("add-todo-button");
     mainTodos.appendChild(addTodoButton);
-    addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
+    addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_2__}">Add Todo`;
     addTodoButton.style.display = "flex";
 }
 
@@ -3648,6 +3659,56 @@ console.log(projects);
 
 /***/ }),
 
+/***/ "./src/check-circle.svg":
+/*!******************************!*\
+  !*** ./src/check-circle.svg ***!
+  \******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "fc206c2b3a24c4ad59ac.svg";
+
+/***/ }),
+
+/***/ "./src/circle.svg":
+/*!************************!*\
+  !*** ./src/circle.svg ***!
+  \************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "aeb8a72427916fe8cb22.svg";
+
+/***/ }),
+
+/***/ "./src/edit.svg":
+/*!**********************!*\
+  !*** ./src/edit.svg ***!
+  \**********************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "f9a985514490b0533545.svg";
+
+/***/ }),
+
+/***/ "./src/plus-square.svg":
+/*!*****************************!*\
+  !*** ./src/plus-square.svg ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "1254f9745b42217d16e8.svg";
+
+/***/ }),
+
+/***/ "./src/trash-2.svg":
+/*!*************************!*\
+  !*** ./src/trash-2.svg ***!
+  \*************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "bba7f8a90befcbd8f9c0.svg";
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/typeof.js":
 /*!***********************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/typeof.js ***!
@@ -3721,6 +3782,18 @@ function _typeof(obj) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -3735,6 +3808,29 @@ function _typeof(obj) {
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */

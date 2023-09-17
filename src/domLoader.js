@@ -1,6 +1,12 @@
-import { projects } from "./index";
+import { projects } from './index';
 import { todoFactory, projectFactory } from "./appLogic";
 import { format, formatDistance, formatRelative, subDays, isToday, parseISO } from 'date-fns'
+import iconPlusSquare from './plus-square.svg';
+import iconCheckCircle from './check-circle.svg';
+import iconCircle from './circle.svg';
+import iconEdit from './edit.svg';
+import iconTrash from './trash-2.svg';
+
 
 const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
@@ -32,7 +38,7 @@ function renderSidebar() {
     const addProjectButton = document.createElement("div");
     addProjectButton.classList.add("add-project-button");
     sideMenu.appendChild(addProjectButton);
-    addProjectButton.innerHTML = `<img src="plus-square.svg">Add Project`;
+    addProjectButton.innerHTML = `<img src="${iconPlusSquare}">Add Project`;
 }
 
 function renderMainHeader() {
@@ -57,7 +63,7 @@ function renderMain() {
         const todoIcon = document.createElement("div");
         todoIcon.classList.add("todo-icon");
         todoDiv.appendChild(todoIcon);
-        todoIcon.innerHTML = `<img src="circle.svg">`;
+        todoIcon.innerHTML = `<img src="${iconCircle}">`;
 
         const todoTitle = document.createElement("div");
         todoTitle.classList.add("todo-title");
@@ -78,22 +84,22 @@ function renderMain() {
         const todoEdit = document.createElement("div");
         todoEdit.classList.add("todo-edit");
         todoDiv.appendChild(todoEdit);
-        todoEdit.innerHTML = `<img src="edit.svg">`;
+        todoEdit.innerHTML = `<img src="${iconEdit}">`;
 
         const todoTrash = document.createElement("div");
         todoTrash.classList.add("todo-trash");
         todoDiv.appendChild(todoTrash);
-        todoTrash.innerHTML = `<img src="trash-2.svg">`;
+        todoTrash.innerHTML = `<img src="${iconTrash}">`;
 
         if (todo.done === true) {
-            todoIcon.innerHTML = `<img src="check-circle.svg">`;
+            todoIcon.innerHTML = `<img src="${iconCheckCircle}">`;
             todoDiv.classList.add("done");
         }
     });
 
     addTodoButton.classList.add("add-todo-button");
     mainTodos.appendChild(addTodoButton);
-    addTodoButton.innerHTML = `<img src="plus-square.svg">Add Todo`;
+    addTodoButton.innerHTML = `<img src="${iconPlusSquare}">Add Todo`;
     addTodoButton.style.display = "flex";
 }
 
