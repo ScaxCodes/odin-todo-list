@@ -3480,14 +3480,14 @@ function getDynamicAddTodoListeners() {
 
     const buttonAddTodoConfirm = document.querySelector(".add-todo-add-button");
     buttonAddTodoConfirm.addEventListener("click", () => {
-        const todoinputProjectTitle = document.querySelector("#todo-title");
-        const todoinputProjectDescription = document.querySelector("#todo-description");
-        const todoDueDate = document.querySelector("#due-date");
-        if (todoinputProjectTitle.value === "") alert("Please enter a title!");
+        const inputTodoTitle = document.querySelector("#todo-title");
+        const inputTodoDescription = document.querySelector("#todo-description");
+        const inputTodoDueDate = document.querySelector("#due-date");
+        if (inputTodoTitle.value === "") alert("Please enter a title!");
         else {
             buttonAddTodo.style.display = "block";
             divAddTodo.style.display = "none";
-            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoinputProjectTitle.value, todoinputProjectDescription.value, todoDueDate.value);
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(inputTodoTitle.value, inputTodoDescription.value, inputTodoDueDate.value);
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
@@ -3500,7 +3500,7 @@ function _clearInputs() {
     inputProjectDescription.value = "";
 }
 
-console.log("domLoader.js has been executed");
+console.log("eventListeners.js has been executed");
 
 
 
@@ -3537,14 +3537,17 @@ if (!localStorage.getItem("projects")) {
     (0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.addProject)("Default Project", "Well, this is just a template");
     projects[0].active = true;
     (0,_eventListeners__WEBPACK_IMPORTED_MODULE_1__.addTodo)("Default Todo", "Enter some description here", "2023-09-15");
-  } else {
+} 
+else {
     // Load projects/todos from local storage
     projects = JSON.parse(localStorage.getItem("projects"));
     console.log("Local storage has been found!");
-  }
+}
 
 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
 (0,_eventListeners__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
+
+console.log("index.js has been executed");
 
 
 
@@ -3669,7 +3672,6 @@ function _renderMain() {
         }
     });
 
-    // Create new button here = no duplication of divs (?)
     const buttonAddTodo = document.createElement("div");
     buttonAddTodo.classList.add("add-todo-button");
     _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(buttonAddTodo);
@@ -3702,7 +3704,6 @@ function renderEditTodoContainer(index) {
 }
 
 function renderDivAddTodo() {
-    const buttonAddTodo = document.querySelector(".add-todo-button");
     const divAddTodo = document.createElement("div");
     divAddTodo.classList.add("add-todo-container");
     _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(divAddTodo);
@@ -3740,6 +3741,8 @@ function clearWebsite() {
     mainHeader.innerHTML = "";
     _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.innerHTML = "";
 }
+
+console.log("render.js has been executed");
 
 
 

@@ -127,14 +127,14 @@ function getDynamicAddTodoListeners() {
 
     const buttonAddTodoConfirm = document.querySelector(".add-todo-add-button");
     buttonAddTodoConfirm.addEventListener("click", () => {
-        const todoinputProjectTitle = document.querySelector("#todo-title");
-        const todoinputProjectDescription = document.querySelector("#todo-description");
-        const todoDueDate = document.querySelector("#due-date");
-        if (todoinputProjectTitle.value === "") alert("Please enter a title!");
+        const inputTodoTitle = document.querySelector("#todo-title");
+        const inputTodoDescription = document.querySelector("#todo-description");
+        const inputTodoDueDate = document.querySelector("#due-date");
+        if (inputTodoTitle.value === "") alert("Please enter a title!");
         else {
             buttonAddTodo.style.display = "block";
             divAddTodo.style.display = "none";
-            addTodo(todoinputProjectTitle.value, todoinputProjectDescription.value, todoDueDate.value);
+            addTodo(inputTodoTitle.value, inputTodoDescription.value, inputTodoDueDate.value);
             saveLocalStorage();
             clearWebsite();
             renderPage();
@@ -147,7 +147,7 @@ function _clearInputs() {
     inputProjectDescription.value = "";
 }
 
-console.log("domLoader.js has been executed");
+console.log("eventListeners.js has been executed");
 
 export { renderPage, getStaticEventListeners, getDynamicEventListeners, getDynamicAddTodoListeners, addTodo };
 export { mainTodos };

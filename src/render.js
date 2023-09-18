@@ -91,7 +91,6 @@ function _renderMain() {
         }
     });
 
-    // Create new button here = no duplication of divs (?)
     const buttonAddTodo = document.createElement("div");
     buttonAddTodo.classList.add("add-todo-button");
     mainTodos.appendChild(buttonAddTodo);
@@ -124,7 +123,6 @@ function renderEditTodoContainer(index) {
 }
 
 function renderDivAddTodo() {
-    const buttonAddTodo = document.querySelector(".add-todo-button");
     const divAddTodo = document.createElement("div");
     divAddTodo.classList.add("add-todo-container");
     mainTodos.appendChild(divAddTodo);
@@ -162,5 +160,7 @@ function clearWebsite() {
     mainHeader.innerHTML = "";
     mainTodos.innerHTML = "";
 }
+
+console.log("render.js has been executed");
 
 export { renderPage, showPopup, hidePopup, renderEditTodoContainer, clearWebsite, renderDivAddTodo };
