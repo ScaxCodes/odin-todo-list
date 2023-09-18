@@ -1,13 +1,16 @@
 import { projects } from "./index";
 import { getActiveProject } from "./appLogic";
 import { getDynamicEventListeners } from "./eventListeners";
-import { buttonAddTodo, sideMenu, mainHeader, mainTodos } from "./eventListeners";
+import { mainTodos } from "./eventListeners";
 import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
 import iconCheckCircle from './check-circle.svg';
 import iconCircle from './circle.svg';
 import iconEdit from './edit.svg';
 import iconTrash from './trash-2.svg';
+
+const sideMenu = document.querySelector(".side-menu");
+const mainHeader = document.querySelector(".main-header");
 
 function renderPage() {
     _renderSidebar();
@@ -88,6 +91,8 @@ function _renderMain() {
         }
     });
 
+    // Create new button here = no duplication of divs (?)
+    const buttonAddTodo = document.createElement("div");
     buttonAddTodo.classList.add("add-todo-button");
     mainTodos.appendChild(buttonAddTodo);
     buttonAddTodo.innerHTML = `<img src="${iconPlusSquare}">Add Todo`;
@@ -118,4 +123,14 @@ function renderEditTodoContainer(index) {
     `;
 }
 
-export { renderPage, showPopup, hidePopup, renderEditTodoContainer };
+function clearWebsite() {
+    sideMenu.innerHTML = `
+        <div class="side-header">
+            <h2>Projects</h2>
+        </div>
+    `;
+    mainHeader.innerHTML = "";
+    mainTodos.innerHTML = "";
+}
+
+export { renderPage, showPopup, hidePopup, renderEditTodoContainer, clearWebsite };

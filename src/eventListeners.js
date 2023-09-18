@@ -1,30 +1,34 @@
 import { projects } from './index';
 import { addProject, addTodo, updateTodoValues, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
-import { renderPage, showPopup, hidePopup, renderEditTodoContainer } from "./render";
+import { renderPage, showPopup, hidePopup, renderEditTodoContainer, clearWebsite } from "./render";
 
-
-const sideMenu = document.querySelector(".side-menu");
-const mainHeader = document.querySelector(".main-header");
+// Container of the dynamic todos
 const mainTodos = document.querySelector(".main-todos");
 
-const buttonAddTodo = document.createElement("div");
-
-
-const titleInput = document.querySelector("#project-title");
-const descriptionInput = document.querySelector("#project-description");
+// Inputs from the static popup
+const inputProjectTitle = document.querySelector("#project-title");
+const inputProjectDescription = document.querySelector("#project-description");
 
 function getDynamicEventListeners() {
     const buttonAddProject = document.querySelector(".add-project-button");
     buttonAddProject.addEventListener("click", () => {
+        // Display the add a project popup
         showPopup();
+    });
+
+    const buttonAddTodo = document.querySelector(".add-todo-button");
+    buttonAddTodo.addEventListener("click", () => {
+        buttonAddTodo.style.display = "none";
+        renderAddTodoDiv();
     });
 
     const buttonsSelectProject = document.querySelectorAll(".project");
     buttonsSelectProject.forEach((btn, index) => {
+        // Select a project
         btn.addEventListener("click", () => {
             clearActiveProjects();
             setActiveProject(index);
-            _clearWebsite();
+            clearWebsite();
             renderPage();
         });
     });
@@ -37,7 +41,7 @@ function getDynamicEventListeners() {
                 projects[getActiveProject()].todos[index].done = true;
                 console.log("Todo done...");
                 saveLocalStorage();
-                _clearWebsite();
+                clearWebsite();
                 renderPage();
             }
         });
@@ -50,7 +54,7 @@ function getDynamicEventListeners() {
             projects[getActiveProject()].todos.splice(index, 1);
             console.log("Todo deleted");
             saveLocalStorage();
-            _clearWebsite();
+            clearWebsite();
             renderPage();
         });
     });
@@ -68,16 +72,18 @@ function getDynamicEventListeners() {
 
             const buttonSaveEditTodo = document.querySelector(".save-edit");
             buttonSaveEditTodo.addEventListener("click", () => {
+                // Save edit
                 updateTodoValues(index, inputEditTitle.value, inputEditDescription.value, inputEditDueDate.value);
                 saveLocalStorage();
-                _clearWebsite();
+                clearWebsite();
                 renderPage();
             });
 
             const buttonCancelEditTodo = document.querySelector(".cancel-edit");
             buttonCancelEditTodo.addEventListener("click", () => {
+                // Cancel edit
                 console.log("Edit canceled...")
-                _clearWebsite();
+                clearWebsite();
                 renderPage();
             });
         });
@@ -88,32 +94,32 @@ function getDynamicEventListeners() {
 function getStaticEventListeners() {
     const buttonPopupCancel = document.querySelector(".cancel-button");
     buttonPopupCancel.addEventListener("click", () => {
+        // Cancel to add a new project
+        _clearInputs();
         hidePopup();
     });
 
     const buttonPopupAdd = document.querySelector(".add-button");
     buttonPopupAdd.addEventListener("click", () => {
-        if (!titleInput.value) alert("Please enter a title");
+        // Add a new project
+        if (!inputProjectTitle.value) alert("Please enter a title");
         else {
-            addProject(titleInput.value, descriptionInput.value);
+            addProject(inputProjectTitle.value, inputProjectDescription.value);
             hidePopup();
             saveLocalStorage();
             _clearInputs();
-            _clearWebsite();
+            clearWebsite();
             renderPage();
         }
     });
 
-    const buttonAddTodo = document.querySelector(".add-todo-button");
-    buttonAddTodo.addEventListener("click", () => {
-        buttonAddTodo.style.display = "none";
-        renderAddTodoDiv();
-    });
+
 }
 
 // Plus event listener, bad design?
 // buttonAddTodo global, as its needed in various functions, bad design?
 function renderAddTodoDiv() {
+    const buttonAddTodo = document.querySelector(".add-todo-button");
     const addTodoDiv = document.createElement("div");
     addTodoDiv.classList.add("add-todo-container");
     mainTodos.appendChild(addTodoDiv);
@@ -142,42 +148,32 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         buttonAddTodo.style.display = "flex";
-        _clearWebsite();
+        clearWebsite();
         renderPage();
     });
 
     addTodoAddButton.addEventListener("click", () => {
-        const todoTitleInput = document.querySelector("#todo-title");
-        const todoDescriptionInput = document.querySelector("#todo-description");
+        const todoinputProjectTitle = document.querySelector("#todo-title");
+        const todoinputProjectDescription = document.querySelector("#todo-description");
         const todoDueDate = document.querySelector("#due-date");
-        if (todoTitleInput.value === "") alert("Please enter a title!");
+        if (todoinputProjectTitle.value === "") alert("Please enter a title!");
         else {
             buttonAddTodo.style.display = "block";
             addTodoDiv.style.display = "none";
-            addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
+            addTodo(todoinputProjectTitle.value, todoinputProjectDescription.value, todoDueDate.value);
             saveLocalStorage();
-            _clearWebsite();
+            clearWebsite();
             renderPage();
         }
     });
 }
 
 function _clearInputs() {
-    titleInput.value = "";
-    descriptionInput.value = "";
-}
-
-function _clearWebsite() {
-    sideMenu.innerHTML = `
-        <div class="side-header">
-            <h2>Projects</h2>
-        </div>
-    `;
-    mainHeader.innerHTML = "";
-    mainTodos.innerHTML = "";
+    inputProjectTitle.value = "";
+    inputProjectDescription.value = "";
 }
 
 console.log("domLoader.js has been executed");
 
 export { renderPage, getStaticEventListeners, getDynamicEventListeners, addTodo };
-export { buttonAddTodo, sideMenu, mainHeader, mainTodos };
+export { mainTodos };

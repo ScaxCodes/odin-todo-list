@@ -3342,13 +3342,10 @@ console.log("appLogic.js has been executed");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addTodo: () => (/* reexport safe */ _appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo),
-/* harmony export */   buttonAddTodo: () => (/* binding */ buttonAddTodo),
 /* harmony export */   getDynamicEventListeners: () => (/* binding */ getDynamicEventListeners),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
-/* harmony export */   mainHeader: () => (/* binding */ mainHeader),
 /* harmony export */   mainTodos: () => (/* binding */ mainTodos),
-/* harmony export */   renderPage: () => (/* reexport safe */ _render__WEBPACK_IMPORTED_MODULE_2__.renderPage),
-/* harmony export */   sideMenu: () => (/* binding */ sideMenu)
+/* harmony export */   renderPage: () => (/* reexport safe */ _render__WEBPACK_IMPORTED_MODULE_2__.renderPage)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
@@ -3357,29 +3354,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-const sideMenu = document.querySelector(".side-menu");
-const mainHeader = document.querySelector(".main-header");
+// Container of the dynamic todos
 const mainTodos = document.querySelector(".main-todos");
 
-const buttonAddTodo = document.createElement("div");
-
-
-const titleInput = document.querySelector("#project-title");
-const descriptionInput = document.querySelector("#project-description");
+// Inputs from the static popup
+const inputProjectTitle = document.querySelector("#project-title");
+const inputProjectDescription = document.querySelector("#project-description");
 
 function getDynamicEventListeners() {
     const buttonAddProject = document.querySelector(".add-project-button");
     buttonAddProject.addEventListener("click", () => {
+        // Display the add a project popup
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.showPopup)();
+    });
+
+    const buttonAddTodo = document.querySelector(".add-todo-button");
+    buttonAddTodo.addEventListener("click", () => {
+        buttonAddTodo.style.display = "none";
+        renderAddTodoDiv();
     });
 
     const buttonsSelectProject = document.querySelectorAll(".project");
     buttonsSelectProject.forEach((btn, index) => {
+        // Select a project
         btn.addEventListener("click", () => {
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.clearActiveProjects)();
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.setActiveProject)(index);
-            _clearWebsite();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
@@ -3392,7 +3393,7 @@ function getDynamicEventListeners() {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done = true;
                 console.log("Todo done...");
                 (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-                _clearWebsite();
+                (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             }
         });
@@ -3405,7 +3406,7 @@ function getDynamicEventListeners() {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.splice(index, 1);
             console.log("Todo deleted");
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-            _clearWebsite();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
@@ -3423,16 +3424,18 @@ function getDynamicEventListeners() {
 
             const buttonSaveEditTodo = document.querySelector(".save-edit");
             buttonSaveEditTodo.addEventListener("click", () => {
+                // Save edit
                 (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.updateTodoValues)(index, inputEditTitle.value, inputEditDescription.value, inputEditDueDate.value);
                 (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-                _clearWebsite();
+                (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
 
             const buttonCancelEditTodo = document.querySelector(".cancel-edit");
             buttonCancelEditTodo.addEventListener("click", () => {
+                // Cancel edit
                 console.log("Edit canceled...")
-                _clearWebsite();
+                ;(0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
         });
@@ -3443,32 +3446,32 @@ function getDynamicEventListeners() {
 function getStaticEventListeners() {
     const buttonPopupCancel = document.querySelector(".cancel-button");
     buttonPopupCancel.addEventListener("click", () => {
+        // Cancel to add a new project
+        _clearInputs();
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.hidePopup)();
     });
 
     const buttonPopupAdd = document.querySelector(".add-button");
     buttonPopupAdd.addEventListener("click", () => {
-        if (!titleInput.value) alert("Please enter a title");
+        // Add a new project
+        if (!inputProjectTitle.value) alert("Please enter a title");
         else {
-            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addProject)(titleInput.value, descriptionInput.value);
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addProject)(inputProjectTitle.value, inputProjectDescription.value);
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.hidePopup)();
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             _clearInputs();
-            _clearWebsite();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
 
-    const buttonAddTodo = document.querySelector(".add-todo-button");
-    buttonAddTodo.addEventListener("click", () => {
-        buttonAddTodo.style.display = "none";
-        renderAddTodoDiv();
-    });
+
 }
 
 // Plus event listener, bad design?
 // buttonAddTodo global, as its needed in various functions, bad design?
 function renderAddTodoDiv() {
+    const buttonAddTodo = document.querySelector(".add-todo-button");
     const addTodoDiv = document.createElement("div");
     addTodoDiv.classList.add("add-todo-container");
     mainTodos.appendChild(addTodoDiv);
@@ -3497,39 +3500,29 @@ function renderAddTodoDiv() {
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
         buttonAddTodo.style.display = "flex";
-        _clearWebsite();
+        (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
     });
 
     addTodoAddButton.addEventListener("click", () => {
-        const todoTitleInput = document.querySelector("#todo-title");
-        const todoDescriptionInput = document.querySelector("#todo-description");
+        const todoinputProjectTitle = document.querySelector("#todo-title");
+        const todoinputProjectDescription = document.querySelector("#todo-description");
         const todoDueDate = document.querySelector("#due-date");
-        if (todoTitleInput.value === "") alert("Please enter a title!");
+        if (todoinputProjectTitle.value === "") alert("Please enter a title!");
         else {
             buttonAddTodo.style.display = "block";
             addTodoDiv.style.display = "none";
-            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoinputProjectTitle.value, todoinputProjectDescription.value, todoDueDate.value);
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
-            _clearWebsite();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
 }
 
 function _clearInputs() {
-    titleInput.value = "";
-    descriptionInput.value = "";
-}
-
-function _clearWebsite() {
-    sideMenu.innerHTML = `
-        <div class="side-header">
-            <h2>Projects</h2>
-        </div>
-    `;
-    mainHeader.innerHTML = "";
-    mainTodos.innerHTML = "";
+    inputProjectTitle.value = "";
+    inputProjectDescription.value = "";
 }
 
 console.log("domLoader.js has been executed");
@@ -3590,6 +3583,7 @@ if (!localStorage.getItem("projects")) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clearWebsite: () => (/* binding */ clearWebsite),
 /* harmony export */   hidePopup: () => (/* binding */ hidePopup),
 /* harmony export */   renderEditTodoContainer: () => (/* binding */ renderEditTodoContainer),
 /* harmony export */   renderPage: () => (/* binding */ renderPage),
@@ -3617,6 +3611,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const sideMenu = document.querySelector(".side-menu");
+const mainHeader = document.querySelector(".main-header");
+
 function renderPage() {
     _renderSidebar();
     _renderMainHeader();
@@ -3630,21 +3627,21 @@ function _renderSidebar() {
         const projectDiv = document.createElement("div");
         projectDiv.classList.add("project");
         if (project.active) projectDiv.classList.add("active");
-        _eventListeners__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(projectDiv);
+        sideMenu.appendChild(projectDiv);
         projectDiv.innerText = project.name;
     });
 
     const addProjectButton = document.createElement("div");
     addProjectButton.classList.add("add-project-button");
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(addProjectButton);
+    sideMenu.appendChild(addProjectButton);
     addProjectButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Project`;
 }
 
 function _renderMainHeader() {
     const headerTitle = document.createElement("div");
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerTitle);
+    mainHeader.appendChild(headerTitle);
     const headerDescription = document.createElement("div");
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerDescription);
+    mainHeader.appendChild(headerDescription);
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         if (project.active) {
             headerTitle.innerText = project.name;
@@ -3696,10 +3693,12 @@ function _renderMain() {
         }
     });
 
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.classList.add("add-todo-button");
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo);
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
-    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.style.display = "flex";
+    // Create new button here = no duplication of divs (?)
+    const buttonAddTodo = document.createElement("div");
+    buttonAddTodo.classList.add("add-todo-button");
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(buttonAddTodo);
+    buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
+    buttonAddTodo.style.display = "flex";
 }
 
 const popup = document.querySelector(".popup");
@@ -3724,6 +3723,16 @@ function renderEditTodoContainer(index) {
     <div class="save-edit edit-button">Save</div>
     <div class="cancel-edit edit-button">Cancel</div>
     `;
+}
+
+function clearWebsite() {
+    sideMenu.innerHTML = `
+        <div class="side-header">
+            <h2>Projects</h2>
+        </div>
+    `;
+    mainHeader.innerHTML = "";
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.innerHTML = "";
 }
 
 
