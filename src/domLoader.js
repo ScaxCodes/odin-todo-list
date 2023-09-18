@@ -1,6 +1,6 @@
 import { projects } from './index';
-import { addProject, addTodo, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
-import { renderPage } from "./render";
+import { addProject, addTodo, updateTodoValues, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
+import { renderPage, renderEditTodoContainer } from "./render";
 
 
 const sideMenu = document.querySelector(".side-menu");
@@ -37,14 +37,16 @@ function getDynamicEventListeners() {
             if (!projects[getActiveProject()].todos[index].done) {
                 projects[getActiveProject()].todos[index].done = true;
                 console.log("Todo done...");
+                saveLocalStorage();
                 _clearWebsite();
                 renderPage();
             }
         });
     });
 
-    const ButtonsDeleteTodo = document.querySelectorAll(".todo-trash");
-    ButtonsDeleteTodo.forEach((btn, index) => {
+    const buttonsDeleteTodo = document.querySelectorAll(".todo-trash");
+    buttonsDeleteTodo.forEach((btn, index) => {
+        // Delete todo
         btn.addEventListener("click", () => {
             projects[getActiveProject()].todos.splice(index, 1);
             console.log("Todo deleted");
@@ -54,28 +56,21 @@ function getDynamicEventListeners() {
         });
     });
 
-
-    const ButtonsEditTodo = document.querySelectorAll(".todo-edit");
-    ButtonsEditTodo.forEach((btn, index) => {
+    const buttonsEditTodo = document.querySelectorAll(".todo-edit");
+    buttonsEditTodo.forEach((btn, index) => {
+        // Edit todo
         btn.addEventListener("click", () => {
-            const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
-            editTodoDiv.innerHTML = `
-            <input type="text" id="edit-todo-title" value="${projects[getActiveProject()].todos[index].title}">
-            <input type="text" id="edit-todo-description" placeholder="Enter description" value="${projects[getActiveProject()].todos[index].description}">
-            <input type="date" id="edit-due-date" name="due-date" value="${projects[getActiveProject()].todos[index].dueDate}">
-            <div class="save-edit edit-button">Save</div>
-            <div class="cancel-edit edit-button">Cancel</div>
-            `;
+            
+            renderEditTodoContainer(index);
+
             const editTitleInput = document.querySelector("#edit-todo-title");
             const editDescriptionInput = document.querySelector("#edit-todo-description");
             const editDueDateInput = document.querySelector("#edit-due-date");
 
             const saveEditButton = document.querySelector(".save-edit");
             saveEditButton.addEventListener("click", () => {
-                projects[getActiveProject()].todos[index].title = editTitleInput.value;
-                projects[getActiveProject()].todos[index].description = editDescriptionInput.value;
-                projects[getActiveProject()].todos[index].dueDate = editDueDateInput.value;
-                console.log("Edit saved...")
+                updateTodoValues(index, editTitleInput.value, editDescriptionInput.value, editDueDateInput.value);
+                saveLocalStorage();
                 _clearWebsite();
                 renderPage();
             });

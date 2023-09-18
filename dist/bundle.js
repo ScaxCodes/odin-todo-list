@@ -3272,7 +3272,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   projectFactory: () => (/* binding */ projectFactory),
 /* harmony export */   saveLocalStorage: () => (/* binding */ saveLocalStorage),
 /* harmony export */   setActiveProject: () => (/* binding */ setActiveProject),
-/* harmony export */   todoFactory: () => (/* binding */ todoFactory)
+/* harmony export */   todoFactory: () => (/* binding */ todoFactory),
+/* harmony export */   updateTodoValues: () => (/* binding */ updateTodoValues)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 
@@ -3293,6 +3294,13 @@ function addProject(name, description) {
 
 function addTodo(name, description, dueDate) {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
+}
+
+function updateTodoValues(index, title, description, dueDate) {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].title = title;
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].description = description;
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[getActiveProject()].todos[index].dueDate = dueDate;
+    console.log("Edit saved...")
 }
 
 function getActiveProject() {
@@ -3384,14 +3392,16 @@ function getDynamicEventListeners() {
             if (!_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done) {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done = true;
                 console.log("Todo done...");
+                (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
                 _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             }
         });
     });
 
-    const ButtonsDeleteTodo = document.querySelectorAll(".todo-trash");
-    ButtonsDeleteTodo.forEach((btn, index) => {
+    const buttonsDeleteTodo = document.querySelectorAll(".todo-trash");
+    buttonsDeleteTodo.forEach((btn, index) => {
+        // Delete todo
         btn.addEventListener("click", () => {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.splice(index, 1);
             console.log("Todo deleted");
@@ -3401,28 +3411,21 @@ function getDynamicEventListeners() {
         });
     });
 
-
-    const ButtonsEditTodo = document.querySelectorAll(".todo-edit");
-    ButtonsEditTodo.forEach((btn, index) => {
+    const buttonsEditTodo = document.querySelectorAll(".todo-edit");
+    buttonsEditTodo.forEach((btn, index) => {
+        // Edit todo
         btn.addEventListener("click", () => {
-            const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
-            editTodoDiv.innerHTML = `
-            <input type="text" id="edit-todo-title" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].title}">
-            <input type="text" id="edit-todo-description" placeholder="Enter description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].description}">
-            <input type="date" id="edit-due-date" name="due-date" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate}">
-            <div class="save-edit edit-button">Save</div>
-            <div class="cancel-edit edit-button">Cancel</div>
-            `;
+            
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderEditTodoContainer)(index);
+
             const editTitleInput = document.querySelector("#edit-todo-title");
             const editDescriptionInput = document.querySelector("#edit-todo-description");
             const editDueDateInput = document.querySelector("#edit-due-date");
 
             const saveEditButton = document.querySelector(".save-edit");
             saveEditButton.addEventListener("click", () => {
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].title = editTitleInput.value;
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].description = editDescriptionInput.value;
-                _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate = editDueDateInput.value;
-                console.log("Edit saved...")
+                (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.updateTodoValues)(index, editTitleInput.value, editDescriptionInput.value, editDueDateInput.value);
+                (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
                 _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
@@ -3599,6 +3602,7 @@ if (!localStorage.getItem("projects")) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderEditTodoContainer: () => (/* binding */ renderEditTodoContainer),
 /* harmony export */   renderPage: () => (/* binding */ renderPage)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
@@ -3706,6 +3710,17 @@ function _renderMain() {
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo);
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.style.display = "flex";
+}
+
+function renderEditTodoContainer(index) {
+    const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
+    editTodoDiv.innerHTML = `
+    <input type="text" id="edit-todo-title" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].title}">
+    <input type="text" id="edit-todo-description" placeholder="Enter description" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].description}">
+    <input type="date" id="edit-due-date" name="due-date" value="${_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].dueDate}">
+    <div class="save-edit edit-button">Save</div>
+    <div class="cancel-edit edit-button">Cancel</div>
+    `;
 }
 
 

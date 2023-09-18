@@ -18,6 +18,13 @@ function addTodo(name, description, dueDate) {
     projects[getActiveProject()].todos.push(todoFactory(name, description, dueDate, null));
 }
 
+function updateTodoValues(index, title, description, dueDate) {
+    projects[getActiveProject()].todos[index].title = title;
+    projects[getActiveProject()].todos[index].description = description;
+    projects[getActiveProject()].todos[index].dueDate = dueDate;
+    console.log("Edit saved...")
+}
+
 function getActiveProject() {
     let index = 0;
     projects.forEach((project, i) => {
@@ -44,4 +51,4 @@ function saveLocalStorage() {
 
 console.log("appLogic.js has been executed");
 
-export { todoFactory, projectFactory, addProject, addTodo, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage };
+export { todoFactory, projectFactory, addProject, addTodo, updateTodoValues, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage };

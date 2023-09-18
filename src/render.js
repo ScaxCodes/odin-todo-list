@@ -94,4 +94,15 @@ function _renderMain() {
     buttonAddTodo.style.display = "flex";
 }
 
-export { renderPage };
+function renderEditTodoContainer(index) {
+    const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
+    editTodoDiv.innerHTML = `
+    <input type="text" id="edit-todo-title" value="${projects[getActiveProject()].todos[index].title}">
+    <input type="text" id="edit-todo-description" placeholder="Enter description" value="${projects[getActiveProject()].todos[index].description}">
+    <input type="date" id="edit-due-date" name="due-date" value="${projects[getActiveProject()].todos[index].dueDate}">
+    <div class="save-edit edit-button">Save</div>
+    <div class="cancel-edit edit-button">Cancel</div>
+    `;
+}
+
+export { renderPage, renderEditTodoContainer };
