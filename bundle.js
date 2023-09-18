@@ -3333,10 +3333,10 @@ console.log("appLogic.js has been executed");
 
 /***/ }),
 
-/***/ "./src/domLoader.js":
-/*!**************************!*\
-  !*** ./src/domLoader.js ***!
-  \**************************/
+/***/ "./src/eventListeners.js":
+/*!*******************************!*\
+  !*** ./src/eventListeners.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -3522,7 +3522,6 @@ function _clearInputs() {
     descriptionInput.value = "";
 }
 
-// TODO: Make sideMenu logic same as mainHeader (clear sideHeader instead of whole sideMenu)
 function _clearWebsite() {
     sideMenu.innerHTML = `
         <div class="side-header">
@@ -3551,7 +3550,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   projects: () => (/* binding */ projects)
 /* harmony export */ });
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
-/* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
+/* harmony import */ var _eventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./eventListeners */ "./src/eventListeners.js");
 /* harmony import */ var _render__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./render */ "./src/render.js");
 /* harmony import */ var _normalize_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./normalize.css */ "./src/normalize.css");
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
@@ -3569,7 +3568,7 @@ if (!localStorage.getItem("projects")) {
 
     (0,_appLogic__WEBPACK_IMPORTED_MODULE_0__.addProject)("Default Project", "Well, this is just a template");
     projects[0].active = true;
-    (0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.addTodo)("Default Todo", "Enter some description here", "2023-09-15");
+    (0,_eventListeners__WEBPACK_IMPORTED_MODULE_1__.addTodo)("Default Todo", "Enter some description here", "2023-09-15");
   } else {
     // Load projects/todos from local storage
     projects = JSON.parse(localStorage.getItem("projects"));
@@ -3577,7 +3576,7 @@ if (!localStorage.getItem("projects")) {
   }
 
 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
-(0,_domLoader__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
+(0,_eventListeners__WEBPACK_IMPORTED_MODULE_1__.getStaticEventListeners)();
 
 
 
@@ -3598,7 +3597,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
-/* harmony import */ var _domLoader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./domLoader */ "./src/domLoader.js");
+/* harmony import */ var _eventListeners__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./eventListeners */ "./src/eventListeners.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isToday/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/formatDistance/index.js");
@@ -3622,7 +3621,7 @@ function renderPage() {
     _renderSidebar();
     _renderMainHeader();
     _renderMain();
-    (0,_domLoader__WEBPACK_IMPORTED_MODULE_2__.getDynamicEventListeners)();
+    (0,_eventListeners__WEBPACK_IMPORTED_MODULE_2__.getDynamicEventListeners)();
     console.log("Page rendered...");
 }
 
@@ -3631,21 +3630,21 @@ function _renderSidebar() {
         const projectDiv = document.createElement("div");
         projectDiv.classList.add("project");
         if (project.active) projectDiv.classList.add("active");
-        _domLoader__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(projectDiv);
+        _eventListeners__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(projectDiv);
         projectDiv.innerText = project.name;
     });
 
     const addProjectButton = document.createElement("div");
     addProjectButton.classList.add("add-project-button");
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(addProjectButton);
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.sideMenu.appendChild(addProjectButton);
     addProjectButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Project`;
 }
 
 function _renderMainHeader() {
     const headerTitle = document.createElement("div");
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerTitle);
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerTitle);
     const headerDescription = document.createElement("div");
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerDescription);
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainHeader.appendChild(headerDescription);
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         if (project.active) {
             headerTitle.innerText = project.name;
@@ -3658,7 +3657,7 @@ function _renderMain() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo-container");
-        _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(todoDiv);
+        _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(todoDiv);
 
         const todoIcon = document.createElement("div");
         todoIcon.classList.add("todo-icon");
@@ -3697,10 +3696,10 @@ function _renderMain() {
         }
     });
 
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.classList.add("add-todo-button");
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo);
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.style.display = "flex";
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.classList.add("add-todo-button");
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo);
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.style.display = "flex";
 }
 
 const popup = document.querySelector(".popup");
