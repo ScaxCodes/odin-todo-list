@@ -3342,6 +3342,7 @@ console.log("appLogic.js has been executed");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addTodo: () => (/* reexport safe */ _appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo),
+/* harmony export */   getDynamicAddTodoListeners: () => (/* binding */ getDynamicAddTodoListeners),
 /* harmony export */   getDynamicEventListeners: () => (/* binding */ getDynamicEventListeners),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
 /* harmony export */   mainTodos: () => (/* binding */ mainTodos),
@@ -3371,7 +3372,7 @@ function getDynamicEventListeners() {
     const buttonAddTodo = document.querySelector(".add-todo-button");
     buttonAddTodo.addEventListener("click", () => {
         buttonAddTodo.style.display = "none";
-        renderAddTodoDiv();
+        (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderDivAddTodo)();
     });
 
     const buttonsSelectProject = document.querySelectorAll(".project");
@@ -3464,54 +3465,28 @@ function getStaticEventListeners() {
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         }
     });
-
-
 }
 
-// Plus event listener, bad design?
-// buttonAddTodo global, as its needed in various functions, bad design?
-function renderAddTodoDiv() {
+function getDynamicAddTodoListeners() {
     const buttonAddTodo = document.querySelector(".add-todo-button");
-    const addTodoDiv = document.createElement("div");
-    addTodoDiv.classList.add("add-todo-container");
-    mainTodos.appendChild(addTodoDiv);
-    
-    const todayDate = new Date().toISOString().slice(0, 10);
+    const divAddTodo = document.querySelector(".add-todo-container");
 
-    const addTodoInputs = document.createElement("div");
-    addTodoInputs.classList.add("add-todo-inputs");
-    addTodoDiv.appendChild(addTodoInputs)
-    addTodoInputs.innerHTML = `
-    <input type="text" id="todo-title" placeholder="Enter todo name">
-    <input type="text" id="todo-description" placeholder="Enter description">
-    <input type="date" id="due-date" name="due-date" value="${todayDate}">
-    `
-
-    const addTodoAddButton = document.createElement("div");
-    addTodoAddButton.classList.add("add-todo-add-button");
-    addTodoDiv.appendChild(addTodoAddButton);
-    addTodoAddButton.innerText = "Add Todo";
-
-    const addTodoCancelButton = document.createElement("div");
-    addTodoCancelButton.classList.add("add-todo-cancel-button");
-    addTodoDiv.appendChild(addTodoCancelButton);
-    addTodoCancelButton.innerText = "Cancel";
-
-    // See comment above
-    addTodoCancelButton.addEventListener("click", () => {
+    const buttonAddTodoCancel = document.querySelector(".add-todo-cancel-button");
+    buttonAddTodoCancel.addEventListener("click", () => {
         buttonAddTodo.style.display = "flex";
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
     });
 
-    addTodoAddButton.addEventListener("click", () => {
+    const buttonAddTodoConfirm = document.querySelector(".add-todo-add-button");
+    buttonAddTodoConfirm.addEventListener("click", () => {
         const todoinputProjectTitle = document.querySelector("#todo-title");
         const todoinputProjectDescription = document.querySelector("#todo-description");
         const todoDueDate = document.querySelector("#due-date");
         if (todoinputProjectTitle.value === "") alert("Please enter a title!");
         else {
             buttonAddTodo.style.display = "block";
-            addTodoDiv.style.display = "none";
+            divAddTodo.style.display = "none";
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoinputProjectTitle.value, todoinputProjectDescription.value, todoDueDate.value);
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.clearWebsite)();
@@ -3585,6 +3560,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clearWebsite: () => (/* binding */ clearWebsite),
 /* harmony export */   hidePopup: () => (/* binding */ hidePopup),
+/* harmony export */   renderDivAddTodo: () => (/* binding */ renderDivAddTodo),
 /* harmony export */   renderEditTodoContainer: () => (/* binding */ renderEditTodoContainer),
 /* harmony export */   renderPage: () => (/* binding */ renderPage),
 /* harmony export */   showPopup: () => (/* binding */ showPopup)
@@ -3723,6 +3699,36 @@ function renderEditTodoContainer(index) {
     <div class="save-edit edit-button">Save</div>
     <div class="cancel-edit edit-button">Cancel</div>
     `;
+}
+
+function renderDivAddTodo() {
+    const buttonAddTodo = document.querySelector(".add-todo-button");
+    const divAddTodo = document.createElement("div");
+    divAddTodo.classList.add("add-todo-container");
+    _eventListeners__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(divAddTodo);
+    
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    const inputsAddTodo = document.createElement("div");
+    inputsAddTodo.classList.add("add-todo-inputs");
+    divAddTodo.appendChild(inputsAddTodo)
+    inputsAddTodo.innerHTML = `
+    <input type="text" id="todo-title" placeholder="Enter todo name">
+    <input type="text" id="todo-description" placeholder="Enter description">
+    <input type="date" id="due-date" name="due-date" value="${todayDate}">
+    `
+
+    const buttonAddTodoConfirm = document.createElement("div");
+    buttonAddTodoConfirm.classList.add("add-todo-add-button");
+    divAddTodo.appendChild(buttonAddTodoConfirm);
+    buttonAddTodoConfirm.innerText = "Add Todo";
+
+    const buttonAddTodoCancel = document.createElement("div");
+    buttonAddTodoCancel.classList.add("add-todo-cancel-button");
+    divAddTodo.appendChild(buttonAddTodoCancel);
+    buttonAddTodoCancel.innerText = "Cancel";
+
+    (0,_eventListeners__WEBPACK_IMPORTED_MODULE_2__.getDynamicAddTodoListeners)();
 }
 
 function clearWebsite() {
