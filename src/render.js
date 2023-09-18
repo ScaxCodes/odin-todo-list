@@ -1,6 +1,6 @@
 import { projects } from "./index";
 import { getActiveProject } from "./appLogic";
-import { getDynamicEventListeners } from "./eventListeners";
+import { getDynamicEventListeners, getDynamicAddTodoListeners } from "./eventListeners";
 import { mainTodos } from "./eventListeners";
 import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
@@ -123,6 +123,36 @@ function renderEditTodoContainer(index) {
     `;
 }
 
+function renderDivAddTodo() {
+    const buttonAddTodo = document.querySelector(".add-todo-button");
+    const divAddTodo = document.createElement("div");
+    divAddTodo.classList.add("add-todo-container");
+    mainTodos.appendChild(divAddTodo);
+    
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    const inputsAddTodo = document.createElement("div");
+    inputsAddTodo.classList.add("add-todo-inputs");
+    divAddTodo.appendChild(inputsAddTodo)
+    inputsAddTodo.innerHTML = `
+    <input type="text" id="todo-title" placeholder="Enter todo name">
+    <input type="text" id="todo-description" placeholder="Enter description">
+    <input type="date" id="due-date" name="due-date" value="${todayDate}">
+    `
+
+    const buttonAddTodoConfirm = document.createElement("div");
+    buttonAddTodoConfirm.classList.add("add-todo-add-button");
+    divAddTodo.appendChild(buttonAddTodoConfirm);
+    buttonAddTodoConfirm.innerText = "Add Todo";
+
+    const buttonAddTodoCancel = document.createElement("div");
+    buttonAddTodoCancel.classList.add("add-todo-cancel-button");
+    divAddTodo.appendChild(buttonAddTodoCancel);
+    buttonAddTodoCancel.innerText = "Cancel";
+
+    getDynamicAddTodoListeners();
+}
+
 function clearWebsite() {
     sideMenu.innerHTML = `
         <div class="side-header">
@@ -133,4 +163,4 @@ function clearWebsite() {
     mainTodos.innerHTML = "";
 }
 
-export { renderPage, showPopup, hidePopup, renderEditTodoContainer, clearWebsite };
+export { renderPage, showPopup, hidePopup, renderEditTodoContainer, clearWebsite, renderDivAddTodo };

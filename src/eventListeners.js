@@ -1,6 +1,6 @@
 import { projects } from './index';
 import { addProject, addTodo, updateTodoValues, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
-import { renderPage, showPopup, hidePopup, renderEditTodoContainer, clearWebsite } from "./render";
+import { renderPage, showPopup, hidePopup, renderEditTodoContainer, renderDivAddTodo, clearWebsite } from "./render";
 
 // Container of the dynamic todos
 const mainTodos = document.querySelector(".main-todos");
@@ -19,7 +19,7 @@ function getDynamicEventListeners() {
     const buttonAddTodo = document.querySelector(".add-todo-button");
     buttonAddTodo.addEventListener("click", () => {
         buttonAddTodo.style.display = "none";
-        renderAddTodoDiv();
+        renderDivAddTodo();
     });
 
     const buttonsSelectProject = document.querySelectorAll(".project");
@@ -112,54 +112,28 @@ function getStaticEventListeners() {
             renderPage();
         }
     });
-
-
 }
 
-// Plus event listener, bad design?
-// buttonAddTodo global, as its needed in various functions, bad design?
-function renderAddTodoDiv() {
+function getDynamicAddTodoListeners() {
     const buttonAddTodo = document.querySelector(".add-todo-button");
-    const addTodoDiv = document.createElement("div");
-    addTodoDiv.classList.add("add-todo-container");
-    mainTodos.appendChild(addTodoDiv);
-    
-    const todayDate = new Date().toISOString().slice(0, 10);
+    const divAddTodo = document.querySelector(".add-todo-container");
 
-    const addTodoInputs = document.createElement("div");
-    addTodoInputs.classList.add("add-todo-inputs");
-    addTodoDiv.appendChild(addTodoInputs)
-    addTodoInputs.innerHTML = `
-    <input type="text" id="todo-title" placeholder="Enter todo name">
-    <input type="text" id="todo-description" placeholder="Enter description">
-    <input type="date" id="due-date" name="due-date" value="${todayDate}">
-    `
-
-    const addTodoAddButton = document.createElement("div");
-    addTodoAddButton.classList.add("add-todo-add-button");
-    addTodoDiv.appendChild(addTodoAddButton);
-    addTodoAddButton.innerText = "Add Todo";
-
-    const addTodoCancelButton = document.createElement("div");
-    addTodoCancelButton.classList.add("add-todo-cancel-button");
-    addTodoDiv.appendChild(addTodoCancelButton);
-    addTodoCancelButton.innerText = "Cancel";
-
-    // See comment above
-    addTodoCancelButton.addEventListener("click", () => {
+    const buttonAddTodoCancel = document.querySelector(".add-todo-cancel-button");
+    buttonAddTodoCancel.addEventListener("click", () => {
         buttonAddTodo.style.display = "flex";
         clearWebsite();
         renderPage();
     });
 
-    addTodoAddButton.addEventListener("click", () => {
+    const buttonAddTodoConfirm = document.querySelector(".add-todo-add-button");
+    buttonAddTodoConfirm.addEventListener("click", () => {
         const todoinputProjectTitle = document.querySelector("#todo-title");
         const todoinputProjectDescription = document.querySelector("#todo-description");
         const todoDueDate = document.querySelector("#due-date");
         if (todoinputProjectTitle.value === "") alert("Please enter a title!");
         else {
             buttonAddTodo.style.display = "block";
-            addTodoDiv.style.display = "none";
+            divAddTodo.style.display = "none";
             addTodo(todoinputProjectTitle.value, todoinputProjectDescription.value, todoDueDate.value);
             saveLocalStorage();
             clearWebsite();
@@ -175,5 +149,5 @@ function _clearInputs() {
 
 console.log("domLoader.js has been executed");
 
-export { renderPage, getStaticEventListeners, getDynamicEventListeners, addTodo };
+export { renderPage, getStaticEventListeners, getDynamicEventListeners, getDynamicAddTodoListeners, addTodo };
 export { mainTodos };
