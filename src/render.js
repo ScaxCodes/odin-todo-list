@@ -1,7 +1,7 @@
 import { projects } from "./index";
 import { getActiveProject } from "./appLogic";
 import { getDynamicEventListeners } from "./domLoader";
-import { addTodoButton, sideMenu, mainHeader, mainTodos } from "./domLoader";
+import { buttonAddTodo, sideMenu, mainHeader, mainTodos } from "./domLoader";
 import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
 import iconCheckCircle from './check-circle.svg';
@@ -88,10 +88,10 @@ function _renderMain() {
         }
     });
 
-    addTodoButton.classList.add("add-todo-button");
-    mainTodos.appendChild(addTodoButton);
-    addTodoButton.innerHTML = `<img src="${iconPlusSquare}">Add Todo`;
-    addTodoButton.style.display = "flex";
+    buttonAddTodo.classList.add("add-todo-button");
+    mainTodos.appendChild(buttonAddTodo);
+    buttonAddTodo.innerHTML = `<img src="${iconPlusSquare}">Add Todo`;
+    buttonAddTodo.style.display = "flex";
 }
 
 export { renderPage };

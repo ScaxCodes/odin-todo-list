@@ -26,6 +26,10 @@ function getActiveProject() {
     return index;
 }
 
+function setActiveProject(index) {
+    projects[index].active = true;
+}
+
 function clearActiveProjects() {
     projects.forEach(project => {
         project.active = false;
@@ -40,4 +44,4 @@ function saveLocalStorage() {
 
 console.log("appLogic.js has been executed");
 
-export { todoFactory, projectFactory, addProject, addTodo, getActiveProject, clearActiveProjects, saveLocalStorage };
+export { todoFactory, projectFactory, addProject, addTodo, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage };

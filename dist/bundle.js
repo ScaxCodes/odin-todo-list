@@ -3271,6 +3271,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getActiveProject: () => (/* binding */ getActiveProject),
 /* harmony export */   projectFactory: () => (/* binding */ projectFactory),
 /* harmony export */   saveLocalStorage: () => (/* binding */ saveLocalStorage),
+/* harmony export */   setActiveProject: () => (/* binding */ setActiveProject),
 /* harmony export */   todoFactory: () => (/* binding */ todoFactory)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
@@ -3302,6 +3303,10 @@ function getActiveProject() {
     return index;
 }
 
+function setActiveProject(index) {
+    _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
+}
+
 function clearActiveProjects() {
     _index__WEBPACK_IMPORTED_MODULE_0__.projects.forEach(project => {
         project.active = false;
@@ -3329,7 +3334,7 @@ console.log("appLogic.js has been executed");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addTodo: () => (/* reexport safe */ _appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo),
-/* harmony export */   addTodoButton: () => (/* binding */ addTodoButton),
+/* harmony export */   buttonAddTodo: () => (/* binding */ buttonAddTodo),
 /* harmony export */   getDynamicEventListeners: () => (/* binding */ getDynamicEventListeners),
 /* harmony export */   getStaticEventListeners: () => (/* binding */ getStaticEventListeners),
 /* harmony export */   mainHeader: () => (/* binding */ mainHeader),
@@ -3349,30 +3354,34 @@ const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
 const mainTodos = document.querySelector(".main-todos");
 
-const addTodoButton = document.createElement("div");
+const buttonAddTodo = document.createElement("div");
 
 const popup = document.querySelector(".popup");
 const popupContainer = document.querySelector(".popup-container");
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
-
-
 function getDynamicEventListeners() {
-    const projectButtons = document.querySelectorAll(".project");
-    projectButtons.forEach((btn, index) => {
+    const buttonAddProject = document.querySelector(".add-project-button");
+    buttonAddProject.addEventListener("click", () => {
+        showPopup();
+    });
+
+    const buttonsSelectProject = document.querySelectorAll(".project");
+    buttonsSelectProject.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.clearActiveProjects)();
-            _index__WEBPACK_IMPORTED_MODULE_0__.projects[index].active = true;
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.setActiveProject)(index);
             _clearWebsite();
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
         });
     });
 
-    const todoButtons = document.querySelectorAll(".todo-icon");
-    todoButtons.forEach((btn, index) => {
+    const buttonsCompleteTodo = document.querySelectorAll(".todo-icon");
+    buttonsCompleteTodo.forEach((btn, index) => {
+        // Mark todo as done if its not done yet
         btn.addEventListener("click", () => {
-            if (_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done === false) {
+            if (!_index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done) {
                 _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos[index].done = true;
                 console.log("Todo done...");
                 _clearWebsite();
@@ -3381,8 +3390,8 @@ function getDynamicEventListeners() {
         });
     });
 
-    const deleteTodoButtons = document.querySelectorAll(".todo-trash");
-    deleteTodoButtons.forEach((btn, index) => {
+    const ButtonsDeleteTodo = document.querySelectorAll(".todo-trash");
+    ButtonsDeleteTodo.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             _index__WEBPACK_IMPORTED_MODULE_0__.projects[(0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.getActiveProject)()].todos.splice(index, 1);
             console.log("Todo deleted");
@@ -3393,8 +3402,8 @@ function getDynamicEventListeners() {
     });
 
 
-    const editTodoButtons = document.querySelectorAll(".todo-edit");
-    editTodoButtons.forEach((btn, index) => {
+    const ButtonsEditTodo = document.querySelectorAll(".todo-edit");
+    ButtonsEditTodo.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
             editTodoDiv.innerHTML = `
@@ -3429,26 +3438,28 @@ function getDynamicEventListeners() {
 
 }
 
-function getStaticEventListeners() {
-    const buttonAddProject = document.querySelector(".add-project-button");
-    buttonAddProject.addEventListener("click", () => {
-        popup.style.display = "flex";
-        popupContainer.style.display = "flex";
-    });
+function showPopup() {
+    popup.style.display = "flex";
+    popupContainer.style.display = "flex";
+}
 
+function hidePopup() {
+    popup.style.display = "none";
+    popupContainer.style.display = "none";   
+}
+
+function getStaticEventListeners() {
     const buttonPopupCancel = document.querySelector(".cancel-button");
     buttonPopupCancel.addEventListener("click", () => {
-        popup.style.display = "none";
-        popupContainer.style.display = "none";     
+        hidePopup();
     });
 
     const buttonPopupAdd = document.querySelector(".add-button");
     buttonPopupAdd.addEventListener("click", () => {
         if (!titleInput.value) alert("Please enter a title");
         else {
-            _index__WEBPACK_IMPORTED_MODULE_0__.projects.push((0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.projectFactory)(titleInput.value, descriptionInput.value));
-            popup.style.display = "none";
-            popupContainer.style.display = "none";
+            (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addProject)(titleInput.value, descriptionInput.value);
+            hidePopup();
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             _clearInputs();
             _clearWebsite();
@@ -3456,15 +3467,15 @@ function getStaticEventListeners() {
         }
     });
 
-    const addTodoButton = document.querySelector(".add-todo-button");
-    addTodoButton.addEventListener("click", () => {
-        addTodoButton.style.display = "none";
+    const buttonAddTodo = document.querySelector(".add-todo-button");
+    buttonAddTodo.addEventListener("click", () => {
+        buttonAddTodo.style.display = "none";
         renderAddTodoDiv();
     });
 }
 
 // Plus event listener, bad design?
-// addTodoButton global, as its needed in various functions, bad design?
+// buttonAddTodo global, as its needed in various functions, bad design?
 function renderAddTodoDiv() {
     const addTodoDiv = document.createElement("div");
     addTodoDiv.classList.add("add-todo-container");
@@ -3493,7 +3504,7 @@ function renderAddTodoDiv() {
 
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
-        addTodoButton.style.display = "flex";
+        buttonAddTodo.style.display = "flex";
         _clearWebsite();
         (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
     });
@@ -3504,7 +3515,7 @@ function renderAddTodoDiv() {
         const todoDueDate = document.querySelector("#due-date");
         if (todoTitleInput.value === "") alert("Please enter a title!");
         else {
-            addTodoButton.style.display = "block";
+            buttonAddTodo.style.display = "block";
             addTodoDiv.style.display = "none";
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addTodo)(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
@@ -3691,10 +3702,10 @@ function _renderMain() {
         }
     });
 
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.classList.add("add-todo-button");
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton);
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
-    _domLoader__WEBPACK_IMPORTED_MODULE_2__.addTodoButton.style.display = "flex";
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.classList.add("add-todo-button");
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo);
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
+    _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.style.display = "flex";
 }
 
 

@@ -1,5 +1,5 @@
 import { projects } from './index';
-import { projectFactory, addTodo, getActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
+import { addProject, addTodo, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
 import { renderPage } from "./render";
 
 
@@ -7,30 +7,34 @@ const sideMenu = document.querySelector(".side-menu");
 const mainHeader = document.querySelector(".main-header");
 const mainTodos = document.querySelector(".main-todos");
 
-const addTodoButton = document.createElement("div");
+const buttonAddTodo = document.createElement("div");
 
 const popup = document.querySelector(".popup");
 const popupContainer = document.querySelector(".popup-container");
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
-
-
 function getDynamicEventListeners() {
-    const projectButtons = document.querySelectorAll(".project");
-    projectButtons.forEach((btn, index) => {
+    const buttonAddProject = document.querySelector(".add-project-button");
+    buttonAddProject.addEventListener("click", () => {
+        showPopup();
+    });
+
+    const buttonsSelectProject = document.querySelectorAll(".project");
+    buttonsSelectProject.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             clearActiveProjects();
-            projects[index].active = true;
+            setActiveProject(index);
             _clearWebsite();
             renderPage();
         });
     });
 
-    const todoButtons = document.querySelectorAll(".todo-icon");
-    todoButtons.forEach((btn, index) => {
+    const buttonsCompleteTodo = document.querySelectorAll(".todo-icon");
+    buttonsCompleteTodo.forEach((btn, index) => {
+        // Mark todo as done if its not done yet
         btn.addEventListener("click", () => {
-            if (projects[getActiveProject()].todos[index].done === false) {
+            if (!projects[getActiveProject()].todos[index].done) {
                 projects[getActiveProject()].todos[index].done = true;
                 console.log("Todo done...");
                 _clearWebsite();
@@ -39,8 +43,8 @@ function getDynamicEventListeners() {
         });
     });
 
-    const deleteTodoButtons = document.querySelectorAll(".todo-trash");
-    deleteTodoButtons.forEach((btn, index) => {
+    const ButtonsDeleteTodo = document.querySelectorAll(".todo-trash");
+    ButtonsDeleteTodo.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             projects[getActiveProject()].todos.splice(index, 1);
             console.log("Todo deleted");
@@ -51,8 +55,8 @@ function getDynamicEventListeners() {
     });
 
 
-    const editTodoButtons = document.querySelectorAll(".todo-edit");
-    editTodoButtons.forEach((btn, index) => {
+    const ButtonsEditTodo = document.querySelectorAll(".todo-edit");
+    ButtonsEditTodo.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
             editTodoDiv.innerHTML = `
@@ -87,26 +91,28 @@ function getDynamicEventListeners() {
 
 }
 
-function getStaticEventListeners() {
-    const buttonAddProject = document.querySelector(".add-project-button");
-    buttonAddProject.addEventListener("click", () => {
-        popup.style.display = "flex";
-        popupContainer.style.display = "flex";
-    });
+function showPopup() {
+    popup.style.display = "flex";
+    popupContainer.style.display = "flex";
+}
 
+function hidePopup() {
+    popup.style.display = "none";
+    popupContainer.style.display = "none";   
+}
+
+function getStaticEventListeners() {
     const buttonPopupCancel = document.querySelector(".cancel-button");
     buttonPopupCancel.addEventListener("click", () => {
-        popup.style.display = "none";
-        popupContainer.style.display = "none";     
+        hidePopup();
     });
 
     const buttonPopupAdd = document.querySelector(".add-button");
     buttonPopupAdd.addEventListener("click", () => {
         if (!titleInput.value) alert("Please enter a title");
         else {
-            projects.push(projectFactory(titleInput.value, descriptionInput.value));
-            popup.style.display = "none";
-            popupContainer.style.display = "none";
+            addProject(titleInput.value, descriptionInput.value);
+            hidePopup();
             saveLocalStorage();
             _clearInputs();
             _clearWebsite();
@@ -114,15 +120,15 @@ function getStaticEventListeners() {
         }
     });
 
-    const addTodoButton = document.querySelector(".add-todo-button");
-    addTodoButton.addEventListener("click", () => {
-        addTodoButton.style.display = "none";
+    const buttonAddTodo = document.querySelector(".add-todo-button");
+    buttonAddTodo.addEventListener("click", () => {
+        buttonAddTodo.style.display = "none";
         renderAddTodoDiv();
     });
 }
 
 // Plus event listener, bad design?
-// addTodoButton global, as its needed in various functions, bad design?
+// buttonAddTodo global, as its needed in various functions, bad design?
 function renderAddTodoDiv() {
     const addTodoDiv = document.createElement("div");
     addTodoDiv.classList.add("add-todo-container");
@@ -151,7 +157,7 @@ function renderAddTodoDiv() {
 
     // See comment above
     addTodoCancelButton.addEventListener("click", () => {
-        addTodoButton.style.display = "flex";
+        buttonAddTodo.style.display = "flex";
         _clearWebsite();
         renderPage();
     });
@@ -162,7 +168,7 @@ function renderAddTodoDiv() {
         const todoDueDate = document.querySelector("#due-date");
         if (todoTitleInput.value === "") alert("Please enter a title!");
         else {
-            addTodoButton.style.display = "block";
+            buttonAddTodo.style.display = "block";
             addTodoDiv.style.display = "none";
             addTodo(todoTitleInput.value, todoDescriptionInput.value, todoDueDate.value);
             saveLocalStorage();
@@ -191,4 +197,4 @@ function _clearWebsite() {
 console.log("domLoader.js has been executed");
 
 export { renderPage, getStaticEventListeners, getDynamicEventListeners, addTodo };
-export { addTodoButton, sideMenu, mainHeader, mainTodos };
+export { buttonAddTodo, sideMenu, mainHeader, mainTodos };
