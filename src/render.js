@@ -1,7 +1,7 @@
 import { projects } from "./index";
 import { getActiveProject } from "./appLogic";
-import { getDynamicEventListeners } from "./domLoader";
-import { buttonAddTodo, sideMenu, mainHeader, mainTodos } from "./domLoader";
+import { getDynamicEventListeners } from "./eventListeners";
+import { buttonAddTodo, sideMenu, mainHeader, mainTodos } from "./eventListeners";
 import { formatDistance, isToday, parseISO } from 'date-fns'
 import iconPlusSquare from './plus-square.svg';
 import iconCheckCircle from './check-circle.svg';

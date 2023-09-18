@@ -167,7 +167,6 @@ function _clearInputs() {
     descriptionInput.value = "";
 }
 
-// TODO: Make sideMenu logic same as mainHeader (clear sideHeader instead of whole sideMenu)
 function _clearWebsite() {
     sideMenu.innerHTML = `
         <div class="side-header">
