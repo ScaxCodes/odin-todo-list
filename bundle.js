@@ -3364,15 +3364,14 @@ const mainTodos = document.querySelector(".main-todos");
 
 const buttonAddTodo = document.createElement("div");
 
-const popup = document.querySelector(".popup");
-const popupContainer = document.querySelector(".popup-container");
+
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
 function getDynamicEventListeners() {
     const buttonAddProject = document.querySelector(".add-project-button");
     buttonAddProject.addEventListener("click", () => {
-        showPopup();
+        (0,_render__WEBPACK_IMPORTED_MODULE_2__.showPopup)();
     });
 
     const buttonsSelectProject = document.querySelectorAll(".project");
@@ -3418,20 +3417,20 @@ function getDynamicEventListeners() {
             
             (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderEditTodoContainer)(index);
 
-            const editTitleInput = document.querySelector("#edit-todo-title");
-            const editDescriptionInput = document.querySelector("#edit-todo-description");
-            const editDueDateInput = document.querySelector("#edit-due-date");
+            const inputEditTitle = document.querySelector("#edit-todo-title");
+            const inputEditDescription = document.querySelector("#edit-todo-description");
+            const inputEditDueDate = document.querySelector("#edit-due-date");
 
-            const saveEditButton = document.querySelector(".save-edit");
-            saveEditButton.addEventListener("click", () => {
-                (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.updateTodoValues)(index, editTitleInput.value, editDescriptionInput.value, editDueDateInput.value);
+            const buttonSaveEditTodo = document.querySelector(".save-edit");
+            buttonSaveEditTodo.addEventListener("click", () => {
+                (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.updateTodoValues)(index, inputEditTitle.value, inputEditDescription.value, inputEditDueDate.value);
                 (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
                 _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
             });
 
-            const cancelEditButton = document.querySelector(".cancel-edit");
-            cancelEditButton.addEventListener("click", () => {
+            const buttonCancelEditTodo = document.querySelector(".cancel-edit");
+            buttonCancelEditTodo.addEventListener("click", () => {
                 console.log("Edit canceled...")
                 _clearWebsite();
                 (0,_render__WEBPACK_IMPORTED_MODULE_2__.renderPage)();
@@ -3441,20 +3440,10 @@ function getDynamicEventListeners() {
 
 }
 
-function showPopup() {
-    popup.style.display = "flex";
-    popupContainer.style.display = "flex";
-}
-
-function hidePopup() {
-    popup.style.display = "none";
-    popupContainer.style.display = "none";   
-}
-
 function getStaticEventListeners() {
     const buttonPopupCancel = document.querySelector(".cancel-button");
     buttonPopupCancel.addEventListener("click", () => {
-        hidePopup();
+        (0,_render__WEBPACK_IMPORTED_MODULE_2__.hidePopup)();
     });
 
     const buttonPopupAdd = document.querySelector(".add-button");
@@ -3462,7 +3451,7 @@ function getStaticEventListeners() {
         if (!titleInput.value) alert("Please enter a title");
         else {
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.addProject)(titleInput.value, descriptionInput.value);
-            hidePopup();
+            (0,_render__WEBPACK_IMPORTED_MODULE_2__.hidePopup)();
             (0,_appLogic__WEBPACK_IMPORTED_MODULE_1__.saveLocalStorage)();
             _clearInputs();
             _clearWebsite();
@@ -3602,8 +3591,10 @@ if (!localStorage.getItem("projects")) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   hidePopup: () => (/* binding */ hidePopup),
 /* harmony export */   renderEditTodoContainer: () => (/* binding */ renderEditTodoContainer),
-/* harmony export */   renderPage: () => (/* binding */ renderPage)
+/* harmony export */   renderPage: () => (/* binding */ renderPage),
+/* harmony export */   showPopup: () => (/* binding */ showPopup)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _appLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./appLogic */ "./src/appLogic.js");
@@ -3710,6 +3701,19 @@ function _renderMain() {
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.mainTodos.appendChild(_domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo);
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.innerHTML = `<img src="${_plus_square_svg__WEBPACK_IMPORTED_MODULE_3__}">Add Todo`;
     _domLoader__WEBPACK_IMPORTED_MODULE_2__.buttonAddTodo.style.display = "flex";
+}
+
+const popup = document.querySelector(".popup");
+const popupContainer = document.querySelector(".popup-container");
+
+function showPopup() {
+    popup.style.display = "flex";
+    popupContainer.style.display = "flex";
+}
+
+function hidePopup() {
+    popup.style.display = "none";
+    popupContainer.style.display = "none";   
 }
 
 function renderEditTodoContainer(index) {
