@@ -94,6 +94,19 @@ function _renderMain() {
     buttonAddTodo.style.display = "flex";
 }
 
+const popup = document.querySelector(".popup");
+const popupContainer = document.querySelector(".popup-container");
+
+function showPopup() {
+    popup.style.display = "flex";
+    popupContainer.style.display = "flex";
+}
+
+function hidePopup() {
+    popup.style.display = "none";
+    popupContainer.style.display = "none";   
+}
+
 function renderEditTodoContainer(index) {
     const editTodoDiv = document.querySelector(`.todo-container:nth-child(${index + 1})`);
     editTodoDiv.innerHTML = `
@@ -105,4 +118,4 @@ function renderEditTodoContainer(index) {
     `;
 }
 
-export { renderPage, renderEditTodoContainer };
+export { renderPage, showPopup, hidePopup, renderEditTodoContainer };

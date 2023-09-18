@@ -1,6 +1,6 @@
 import { projects } from './index';
 import { addProject, addTodo, updateTodoValues, getActiveProject, setActiveProject, clearActiveProjects, saveLocalStorage } from "./appLogic";
-import { renderPage, renderEditTodoContainer } from "./render";
+import { renderPage, showPopup, hidePopup, renderEditTodoContainer } from "./render";
 
 
 const sideMenu = document.querySelector(".side-menu");
@@ -9,8 +9,7 @@ const mainTodos = document.querySelector(".main-todos");
 
 const buttonAddTodo = document.createElement("div");
 
-const popup = document.querySelector(".popup");
-const popupContainer = document.querySelector(".popup-container");
+
 const titleInput = document.querySelector("#project-title");
 const descriptionInput = document.querySelector("#project-description");
 
@@ -63,20 +62,20 @@ function getDynamicEventListeners() {
             
             renderEditTodoContainer(index);
 
-            const editTitleInput = document.querySelector("#edit-todo-title");
-            const editDescriptionInput = document.querySelector("#edit-todo-description");
-            const editDueDateInput = document.querySelector("#edit-due-date");
+            const inputEditTitle = document.querySelector("#edit-todo-title");
+            const inputEditDescription = document.querySelector("#edit-todo-description");
+            const inputEditDueDate = document.querySelector("#edit-due-date");
 
-            const saveEditButton = document.querySelector(".save-edit");
-            saveEditButton.addEventListener("click", () => {
-                updateTodoValues(index, editTitleInput.value, editDescriptionInput.value, editDueDateInput.value);
+            const buttonSaveEditTodo = document.querySelector(".save-edit");
+            buttonSaveEditTodo.addEventListener("click", () => {
+                updateTodoValues(index, inputEditTitle.value, inputEditDescription.value, inputEditDueDate.value);
                 saveLocalStorage();
                 _clearWebsite();
                 renderPage();
             });
 
-            const cancelEditButton = document.querySelector(".cancel-edit");
-            cancelEditButton.addEventListener("click", () => {
+            const buttonCancelEditTodo = document.querySelector(".cancel-edit");
+            buttonCancelEditTodo.addEventListener("click", () => {
                 console.log("Edit canceled...")
                 _clearWebsite();
                 renderPage();
@@ -84,16 +83,6 @@ function getDynamicEventListeners() {
         });
     });
 
-}
-
-function showPopup() {
-    popup.style.display = "flex";
-    popupContainer.style.display = "flex";
-}
-
-function hidePopup() {
-    popup.style.display = "none";
-    popupContainer.style.display = "none";   
 }
 
 function getStaticEventListeners() {
